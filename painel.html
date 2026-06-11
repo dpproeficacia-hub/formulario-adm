@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel DP — Pró Eficácia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0E1B3D;
+  --navy-light:#1a2d5a;
+  --gold:#B8975A;
+  --gold-light:#D4B483;
+  --gold-pale:#F5EDD8;
+  --white:#FFFFFF;
+  --off:#F7F6F3;
+  --border:#E2DDD4;
+  --text:#1C1C1C;
+  --muted:#6B6560;
+  --danger:#C0392B;
+  --success:#1a7a4a;
+}
+body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font-size:15px}
+
+/* LOGIN */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{background:var(--white);border-radius:14px;border:1px solid var(--border);width:100%;max-width:400px;overflow:hidden}
+.login-top{background:var(--navy);padding:32px 32px 28px;text-align:center}
+.login-top img{height:50px;margin-bottom:16px}
+.login-top h1{font-size:16px;font-weight:500;color:var(--white)}
+.login-top p{font-size:12px;color:var(--gold-light);margin-top:4px}
+.login-strip{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light))}
+.login-body{padding:28px 32px 32px}
+.lfield{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
+.lfield label{font-size:12px;font-weight:500;color:var(--muted)}
+.lfield input{height:42px;padding:0 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--off);font-size:14px;font-family:'Inter',sans-serif;color:var(--text)}
+.lfield input:focus{outline:none;border-color:var(--gold);background:var(--white)}
+.login-btn{width:100%;height:46px;background:var(--navy);color:var(--white);border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px;transition:background .2s}
+.login-btn:hover{background:var(--navy-light)}
+.login-err{font-size:13px;color:var(--danger);margin-top:8px;text-align:center;display:none}
+
+/* APP */
+#appScreen{display:none;min-height:100vh}
+.app-header{background:var(--navy);position:sticky;top:0;z-index:100}
+.app-header-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.app-header img{height:36px}
+.app-header-right{display:flex;align-items:center;gap:16px}
+.app-header-right span{font-size:13px;color:rgba(255,255,255,.6)}
+.logout-btn{background:rgba(255,255,255,.1);border:none;color:var(--white);font-size:13px;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif}
+.logout-btn:hover{background:rgba(255,255,255,.2)}
+.header-gold-line{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light))}
+
+.app-content{max-width:1100px;margin:0 auto;padding:28px 24px 64px}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+@media(max-width:700px){.stats-row{grid-template-columns:1fr 1fr}}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+.stat-card .num{font-size:28px;font-weight:600;color:var(--navy)}
+.stat-card .lbl{font-size:12px;color:var(--muted);margin-top:2px}
+.stat-card.gold{border-top:3px solid var(--gold)}
+
+/* LINK GENERATOR */
+.link-gen{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:20px}
+.lg-title{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin-bottom:14px}
+.lg-row{display:flex;gap:10px;align-items:flex-end}
+.lg-field{flex:1;display:flex;flex-direction:column;gap:5px}
+.lg-field label{font-size:12px;color:var(--muted);font-weight:500}
+.lg-field input{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);font-size:14px;font-family:'Inter',sans-serif;color:var(--text)}
+.lg-field input:focus{outline:none;border-color:var(--gold);background:var(--white)}
+.lg-btn{height:40px;padding:0 20px;background:var(--navy);color:var(--white);border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.lg-btn:hover{background:var(--navy-light)}
+.link-result{display:none;margin-top:14px;background:var(--off);border:1px solid var(--border);border-radius:7px;padding:12px 14px;display:none;align-items:center;gap:10px}
+.link-result.show{display:flex}
+.link-url{flex:1;font-size:13px;color:var(--navy);word-break:break-all}
+.copy-btn{padding:6px 14px;background:var(--gold-pale);border:1px solid var(--gold);color:var(--navy);border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif}
+.copy-btn:hover{background:var(--gold);color:var(--white)}
+
+/* FICHAS TABLE */
+.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.table-top{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.table-top h3{font-size:14px;font-weight:600;color:var(--navy)}
+.search-input{height:36px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);font-size:13px;font-family:'Inter',sans-serif;color:var(--text);width:220px}
+.search-input:focus{outline:none;border-color:var(--gold)}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--off);padding:10px 16px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1px solid var(--border)}
+tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--off)}
+tbody td{padding:12px 16px;font-size:13px;color:var(--text)}
+tbody td.muted{color:var(--muted)}
+.badge-status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-novo{background:#E8F5E9;color:#2E7D32}
+.badge-andamento{background:#FFF8E1;color:#F57F17}
+.badge-concluido{background:#E3F2FD;color:#1565C0}
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted);font-size:14px}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,27,61,.6);z-index:200;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:12px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto}
+.modal-header{background:var(--navy);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0}
+.modal-header h2{font-size:15px;font-weight:600;color:var(--white)}
+.modal-close{background:rgba(255,255,255,.15);border:none;color:var(--white);font-size:20px;width:32px;height:32px;border-radius:6px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:rgba(255,255,255,.25)}
+.modal-gold-line{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light))}
+.modal-body{padding:24px}
+.m-section{margin-bottom:20px}
+.m-section-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}
+.m-field .m-label{font-size:11px;color:var(--muted);margin-bottom:2px}
+.m-field .m-val{font-size:14px;color:var(--text);font-weight:500}
+.status-select{height:34px;padding:0 10px;border:1.5px solid var(--border);border-radius:6px;background:var(--off);font-size:13px;font-family:'Inter',sans-serif;color:var(--text);cursor:pointer}
+.status-select:focus{outline:none;border-color:var(--gold)}
+.modal-actions{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.btn-save{flex:1;height:40px;background:var(--navy);color:var(--white);border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-save:hover{background:var(--navy-light)}
+.btn-secondary{height:40px;padding:0 18px;background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:7px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-secondary:hover{background:var(--off)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-top">
+      <img src="logo.png" alt="Pró Eficácia">
+      <h1>Painel — Departamento Pessoal</h1>
+      <p>Acesso restrito à equipe</p>
+    </div>
+    <div class="login-strip"></div>
+    <div class="login-body">
+      <div class="lfield">
+        <label>E-mail</label>
+        <input type="email" id="loginEmail" placeholder="seu@proeficacia.com.br">
+      </div>
+      <div class="lfield">
+        <label>Senha</label>
+        <input type="password" id="loginSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="login-btn" onclick="doLogin()">Entrar</button>
+      <div class="login-err" id="loginErr">E-mail ou senha incorretos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="appScreen">
+  <header class="app-header">
+    <div class="app-header-inner">
+      <img src="logo.png" alt="Pró Eficácia">
+      <div class="app-header-right">
+        <span id="userEmail"></span>
+        <button class="logout-btn" onclick="doLogout()">Sair</button>
+      </div>
+    </div>
+    <div class="header-gold-line"></div>
+  </header>
+
+  <div class="app-content">
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card gold"><div class="num" id="statTotal">—</div><div class="lbl">Total de fichas</div></div>
+      <div class="stat-card"><div class="num" id="statNovo">—</div><div class="lbl">Novas</div></div>
+      <div class="stat-card"><div class="num" id="statAndamento">—</div><div class="lbl">Em andamento</div></div>
+      <div class="stat-card"><div class="num" id="statConcluido">—</div><div class="lbl">Concluídas</div></div>
+    </div>
+
+    <!-- GERADOR DE LINK -->
+    <div class="link-gen">
+      <div class="lg-title">Gerar link de admissão</div>
+      <div class="lg-row">
+        <div class="lg-field">
+          <label>Nome da empresa</label>
+          <input type="text" id="linkEmpresa" placeholder="Ex: Padaria São João">
+        </div>
+        <button class="lg-btn" onclick="gerarLink()">Gerar link</button>
+      </div>
+      <div class="link-result" id="linkResult">
+        <span class="link-url" id="linkUrl"></span>
+        <button class="copy-btn" onclick="copiarLink()">Copiar</button>
+      </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="table-wrap">
+      <div class="table-top">
+        <h3>Fichas recebidas</h3>
+        <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nome ou empresa..." oninput="renderTable()">
+      </div>
+      <div id="tableContainer">
+        <div class="empty-state">Carregando fichas...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DETALHE -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Ficha admissional</h2>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-gold-line"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'SUPABASE_URL_PLACEHOLDER';
+const SUPABASE_KEY = 'SUPABASE_ANON_KEY_PLACEHOLDER';
+const FORM_BASE_URL = 'FORM_URL_PLACEHOLDER'; // ex: https://seusite.com/form.html
+
+let allFichas = [];
+let currentFicha = null;
+let supabaseToken = null;
+
+// AUTH via Supabase
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const senha = document.getElementById('loginSenha').value;
+  document.getElementById('loginErr').style.display = 'none';
+  try {
+    const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','apikey':SUPABASE_KEY},
+      body: JSON.stringify({email, password: senha})
+    });
+    const d = await res.json();
+    if (!res.ok || !d.access_token) throw new Error('Credenciais inválidas');
+    supabaseToken = d.access_token;
+    document.getElementById('userEmail').textContent = email;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+    loadFichas();
+  } catch(e) {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+function doLogout() {
+  supabaseToken = null;
+  allFichas = [];
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+async function loadFichas() {
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/fichas_admissionais?select=*&order=created_at.desc', {
+      headers: {'apikey':SUPABASE_KEY,'Authorization':'Bearer '+supabaseToken}
+    });
+    allFichas = await res.json();
+    updateStats();
+    renderTable();
+  } catch(e) {
+    document.getElementById('tableContainer').innerHTML = '<div class="empty-state">Erro ao carregar fichas.</div>';
+  }
+}
+function updateStats() {
+  document.getElementById('statTotal').textContent = allFichas.length;
+  document.getElementById('statNovo').textContent = allFichas.filter(f=>f.status==='novo').length;
+  document.getElementById('statAndamento').textContent = allFichas.filter(f=>f.status==='andamento').length;
+  document.getElementById('statConcluido').textContent = allFichas.filter(f=>f.status==='concluido').length;
+}
+function renderTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const fichas = allFichas.filter(f =>
+    (f.nome||'').toLowerCase().includes(q) ||
+    (f.empresa||'').toLowerCase().includes(q)
+  );
+  if (!fichas.length) {
+    document.getElementById('tableContainer').innerHTML = '<div class="empty-state">Nenhuma ficha encontrada.</div>';
+    return;
+  }
+  const statusLabel = {novo:'Novo',andamento:'Em andamento',concluido:'Concluído'};
+  const statusClass = {novo:'badge-novo',andamento:'badge-andamento',concluido:'badge-concluido'};
+  let html = `<table><thead><tr>
+    <th>Nome</th><th>Empresa</th><th>Função</th><th>Admissão</th><th>Status</th>
+  </tr></thead><tbody>`;
+  fichas.forEach(f => {
+    const dt = f.admissao ? new Date(f.admissao+'T12:00:00').toLocaleDateString('pt-BR') : '—';
+    const st = f.status || 'novo';
+    html += `<tr onclick="openModal(${f.id})">
+      <td><strong>${f.nome||'—'}</strong></td>
+      <td class="muted">${f.empresa||'—'}</td>
+      <td class="muted">${f.funcao||'—'}</td>
+      <td class="muted">${dt}</td>
+      <td><span class="badge-status ${statusClass[st]||'badge-novo'}">${statusLabel[st]||st}</span></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  document.getElementById('tableContainer').innerHTML = html;
+}
+
+// GERADOR DE LINK
+function gerarLink() {
+  const emp = document.getElementById('linkEmpresa').value.trim();
+  if (!emp) { document.getElementById('linkEmpresa').focus(); return; }
+  const url = FORM_BASE_URL + '?empresa=' + encodeURIComponent(emp);
+  document.getElementById('linkUrl').textContent = url;
+  document.getElementById('linkResult').classList.add('show');
+}
+function copiarLink() {
+  const url = document.getElementById('linkUrl').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copiado!';
+    setTimeout(() => btn.textContent = 'Copiar', 2000);
+  });
+}
+
+// MODAL
+function openModal(id) {
+  const f = allFichas.find(x => x.id === id);
+  if (!f) return;
+  currentFicha = f;
+  document.getElementById('modalTitle').textContent = f.nome || 'Ficha admissional';
+  const filhos = (() => { try { return JSON.parse(f.filhos||'[]'); } catch(e) { return []; } })();
+  let filhosHtml = filhos.length ? filhos.map(c=>`<div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)">${c.nome||'—'} | Nasc: ${c.nasc||'—'} | CPF: ${c.cpf||'—'}</div>`).join('') : '<span style="color:var(--muted);font-size:13px">Nenhum</span>';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="m-section">
+      <div class="m-section-title">Empresa & Admissão</div>
+      <div class="m-grid">
+        <div class="m-field"><div class="m-label">Empresa</div><div class="m-val">${f.empresa||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Admissão</div><div class="m-val">${f.admissao?new Date(f.admissao+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</div></div>
+        <div class="m-field"><div class="m-label">Função</div><div class="m-val">${f.funcao||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Salário</div><div class="m-val">R$ ${f.salario||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Contrato</div><div class="m-val">${f.contrato||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Vale transporte</div><div class="m-val">${f.vale_transporte||'—'}</div></div>
+        <div class="m-field" style="grid-column:span 2"><div class="m-label">Horário Seg–Sex</div><div class="m-val">${f.horario_seg_sex||'—'}</div></div>
+        <div class="m-field" style="grid-column:span 2"><div class="m-label">Horário Sábado</div><div class="m-val">${f.horario_sabado||'Não informado'}</div></div>
+      </div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Dados pessoais</div>
+      <div class="m-grid">
+        <div class="m-field" style="grid-column:span 2"><div class="m-label">Nome completo</div><div class="m-val">${f.nome||'—'}</div></div>
+        <div class="m-field"><div class="m-label">CPF</div><div class="m-val">${f.cpf||'—'}</div></div>
+        <div class="m-field"><div class="m-label">PIS / PASEP</div><div class="m-val">${f.pis||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Nome da mãe</div><div class="m-val">${f.nome_mae||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Nome do pai</div><div class="m-val">${f.nome_pai||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Cidade natal</div><div class="m-val">${f.cidade_natal||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Estado civil</div><div class="m-val">${f.estado_civil||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Raça / Cor</div><div class="m-val">${f.raca_cor||'—'}</div></div>
+      </div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Endereço</div>
+      <div class="m-grid">
+        <div class="m-field"><div class="m-label">CEP</div><div class="m-val">${f.cep||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Rua</div><div class="m-val">${f.rua||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Bairro</div><div class="m-val">${f.bairro||'—'}</div></div>
+        <div class="m-field"><div class="m-label">Complemento</div><div class="m-val">${f.complemento||'—'}</div></div>
+        <div class="m-field" style="grid-column:span 2"><div class="m-label">Cidade / UF</div><div class="m-val">${f.cidade||'—'}</div></div>
+      </div>
+    </div>
+    <div class="m-section">
+      <div class="m-section-title">Filhos</div>
+      ${filhosHtml}
+    </div>
+    <div class="modal-actions">
+      <div style="display:flex;align-items:center;gap:10px;flex:1">
+        <span style="font-size:12px;color:var(--muted)">Status:</span>
+        <select class="status-select" id="modalStatus">
+          <option value="novo" ${(f.status||'novo')==='novo'?'selected':''}>Novo</option>
+          <option value="andamento" ${f.status==='andamento'?'selected':''}>Em andamento</option>
+          <option value="concluido" ${f.status==='concluido'?'selected':''}>Concluído</option>
+        </select>
+      </div>
+      <button class="btn-secondary" onclick="closeModal()">Fechar</button>
+      <button class="btn-save" onclick="salvarStatus()">Salvar status</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  currentFicha = null;
+}
+async function salvarStatus() {
+  if (!currentFicha) return;
+  const status = document.getElementById('modalStatus').value;
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/fichas_admissionais?id=eq.' + currentFicha.id, {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+supabaseToken,'Prefer':'return=minimal'},
+      body: JSON.stringify({status})
+    });
+    currentFicha.status = status;
+    const idx = allFichas.findIndex(f => f.id === currentFicha.id);
+    if (idx !== -1) allFichas[idx].status = status;
+    updateStats();
+    renderTable();
+    closeModal();
+  } catch(e) {
+    alert('Erro ao salvar status.');
+  }
+}
+</script>
+</body>
+</html>
