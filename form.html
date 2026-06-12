@@ -23,19 +23,18 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .emp-bar-in{max-width:760px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:10px}
 .emp-bar .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600}
 .emp-bar .nome{font-size:14px;font-weight:500;color:#fff}
-.mode-banner{display:none;max-width:760px;margin:16px auto 0;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(14,27,61,.15)}
-.mode-tabs{display:grid;grid-template-columns:1fr 1fr}
-.mode-tab{padding:14px;text-align:center;cursor:pointer;background:var(--off);border:2px solid var(--border);transition:all .2s;font-family:'Inter',sans-serif}
-.mode-tab:first-child{border-radius:10px 0 0 10px;border-right:none}
-.mode-tab:last-child{border-radius:0 10px 10px 0}
-.mode-tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
-.mode-tab .mt-icon{font-size:22px;margin-bottom:4px}
-.mode-tab .mt-title{font-size:13px;font-weight:600}
-.mode-tab .mt-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.mode-tab.active .mt-sub{color:var(--gold2)}
-.section-locked{opacity:.45;pointer-events:none;user-select:none;position:relative}
-.section-locked::after{content:'🔒 Preenchido pelo Departamento Pessoal';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--navy);background:rgba(247,246,243,.7);border-radius:8px}
-.wrap{max-width:760px;margin:0 auto;padding:20px 24px 64px}
+.orientacoes{max-width:760px;margin:16px auto 0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.ori-hd{background:var(--navy);padding:11px 18px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.ori-hd span{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.ori-hd .arr{color:var(--gold2);font-size:14px;margin-left:auto;transition:transform .2s}
+.ori-hd.open .arr{transform:rotate(180deg)}
+.ori-body{display:none;padding:16px 18px}
+.ori-body.open{display:block}
+.ori-item{display:flex;gap:10px;margin-bottom:10px;font-size:13px;color:var(--text);line-height:1.5}
+.ori-item:last-child{margin-bottom:0}
+.ori-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.ori-warn{background:#FFF3E0;border:1px solid #FFB74D;border-radius:8px;padding:11px 14px;margin-top:10px;font-size:12px;color:#E65100;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:16px 24px 64px}
 .card{background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:18px;overflow:hidden}
 .card-hd{background:var(--navy);padding:13px 20px;display:flex;align-items:center;justify-content:space-between}
 .card-hd h2{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#fff}
@@ -53,6 +52,7 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .f input,.f select{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;transition:border .15s}
 .f input:focus,.f select:focus{outline:none;border-color:var(--gold);background:#fff}
 .f input::placeholder{color:#ccc}
+.f input:read-only{background:#f0f0f0;color:#999;cursor:not-allowed}
 .rr{display:flex;gap:16px;height:40px;align-items:center}
 .rr label{display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
 .rr input[type=radio]{width:16px;height:16px;accent-color:var(--navy)}
@@ -92,6 +92,7 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .upload-item .ui-size{font-size:11px;color:var(--muted)}
 .upload-rm{background:none;border:none;cursor:pointer;color:#ccc;font-size:18px;line-height:1;padding:0}
 .upload-rm:hover{color:var(--red)}
+.aso-warn{background:#FFF3E0;border:1px solid #FFB74D;border-radius:8px;padding:11px 14px;margin-top:10px;font-size:12px;color:#E65100;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
 .filhos-area{background:var(--off);border:1.5px dashed var(--border);border-radius:8px;padding:14px;margin-top:8px}
 .filho-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:13px 14px;margin-bottom:10px;position:relative}
 .filho-rm{position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;color:#ccc;font-size:20px;line-height:1}
@@ -106,7 +107,11 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .success{display:none;text-align:center;padding:48px 24px;background:#fff;border-radius:10px;border:1px solid var(--border)}
 .success .ck{width:58px;height:58px;background:var(--goldpale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:28px}
 .success h3{font-size:20px;font-weight:600;color:var(--navy);margin-bottom:8px}
-.success p{color:var(--muted);font-size:14px}
+.success p{color:var(--muted);font-size:14px;line-height:1.6}
+.link-func-box{display:none;background:var(--goldpale);border:1.5px solid var(--gold);border-radius:8px;padding:14px 16px;margin-top:16px}
+.link-func-box .lf-tit{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.link-func-box .lf-url{font-size:12px;color:var(--navy);word-break:break-all;margin-bottom:8px}
+.link-func-box .lf-btn{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif}
 footer{background:var(--navy);padding:16px;text-align:center}
 footer p{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.04em}
 footer span{color:var(--gold)}
@@ -124,31 +129,23 @@ footer span{color:var(--gold)}
 </div>
 <div class="gold-line"></div>
 <div class="emp-bar" id="empBar">
-  <div class="emp-bar-in">
-    <span class="tag">Empresa</span>
-    <span class="nome" id="empNome"></span>
+  <div class="emp-bar-in"><span class="tag">Empresa</span><span class="nome" id="empNome"></span></div>
+</div>
+<div class="orientacoes">
+  <div class="ori-hd" id="oriHd" onclick="toggleOri()">
+    <span>📋 Orientações de preenchimento</span><span class="arr">▼</span>
+  </div>
+  <div class="ori-body" id="oriBody">
+    <div class="ori-item"><span class="ori-icon">*</span><span>Todos os campos marcados com <strong>*</strong> são obrigatórios.</span></div>
+    <div class="ori-item"><span class="ori-icon">📅</span><span>A <strong>data de admissão</strong> deve ser pelo menos o <strong>primeiro dia útil posterior</strong> ao preenchimento desta ficha.</span></div>
+    <div class="ori-item"><span class="ori-icon">📄</span><span>O ASO deve ser enviado em anexo diretamente à contabilidade após o preenchimento.</span></div>
+    <div class="ori-warn">⚠️ <strong>Atenção:</strong> Registros retroativos ou na data do preenchimento poderão sofrer <strong>penalidades</strong>, incluindo multas e fiscalizações do Ministério do Trabalho.</div>
   </div>
 </div>
-
-<div class="mode-banner" id="modeBanner">
-  <div class="mode-tabs">
-    <div class="mode-tab" id="tabEmpresa" onclick="setMode('empresa')">
-      <div class="mt-icon">🏢</div>
-      <div class="mt-title">Sou a Empresa</div>
-      <div class="mt-sub">Preencher dados da contratação</div>
-    </div>
-    <div class="mode-tab" id="tabFunc" onclick="setMode('funcionario')">
-      <div class="mt-icon">👤</div>
-      <div class="mt-title">Sou o Funcionário</div>
-      <div class="mt-sub">Preencher dados pessoais</div>
-    </div>
-  </div>
-</div>
-
 <div class="wrap">
   <div id="formWrap">
     <div class="card" id="cardEmpresa">
-      <div class="card-hd"><h2>Dados da empresa</h2><span class="badge">Preenchido pelo DP / Empresa</span></div>
+      <div class="card-hd"><h2>Dados da contratação</h2><span class="badge">Preenchido pela empresa</span></div>
       <div class="card-body">
         <div class="g g2">
           <div class="f s2"><label>Empresa contratante <span class="r">*</span></label><input type="text" id="empresa" placeholder="Razão social ou nome fantasia"></div>
@@ -165,9 +162,7 @@ footer span{color:var(--gold)}
         <div class="dv"></div>
         <div class="sub">Horário de trabalho</div>
         <table class="hor-table">
-          <thead>
-            <tr><th>Dia</th><th>Entrada</th><th>Iníc. intervalo</th><th>Ret. intervalo</th><th>Saída</th><th>Total</th></tr>
-          </thead>
+          <thead><tr><th>Dia</th><th>Entrada</th><th>Iníc. intervalo</th><th>Ret. intervalo</th><th>Saída</th><th>Total</th></tr></thead>
           <tbody>
             <tr>
               <td><div class="day-label">Segunda</div></td>
@@ -220,15 +215,20 @@ footer span{color:var(--gold)}
           </tbody>
         </table>
         <div class="total-horas" id="totalHorasBox">
-          <div>
-            <div class="lbl2">Total semanal</div>
-            <div id="totalAviso" style="display:none" class="aviso">⚠ Acima do limite de 44h semanais</div>
-          </div>
+          <div><div class="lbl2">Total semanal</div><div id="totalAviso" style="display:none" class="aviso">⚠ Acima do limite de 44h semanais</div></div>
           <div class="valor" id="totalHorasValor">0h 00min</div>
         </div>
+        <div class="dv"></div>
+        <div class="sub">ASO — Atestado de Saúde Ocupacional</div>
+        <div class="upload-area" id="uploadAreaAso" onclick="document.getElementById('asoInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDropAso(event)">
+          <input type="file" id="asoInput" accept=".pdf,.jpg,.jpeg,.png" onchange="handleAso(this.files)">
+          <div class="upload-icon">📋</div>
+          <div class="upload-txt"><strong>Clique para anexar o ASO</strong><br>PDF, JPG ou PNG · máx. 5MB</div>
+        </div>
+        <div id="asoList"></div>
+        <div class="aso-warn">⚠️ <strong>Importante:</strong> O ASO deve ser enviado em anexo diretamente à contabilidade da Pró Eficácia após o preenchimento desta ficha.</div>
       </div>
     </div>
-
     <div class="card" id="cardFunc">
       <div class="card-hd"><h2>Dados do funcionário</h2><span class="badge">Preenchido pelo funcionário</span></div>
       <div class="card-body">
@@ -269,7 +269,7 @@ footer span{color:var(--gold)}
           <button class="add-btn" type="button" onclick="addFilho()">+ Adicionar filho</button>
         </div>
         <div class="dv"></div>
-        <div class="sub">Documentos <span style="font-size:11px;color:#bbb;font-weight:400;text-transform:none;letter-spacing:0">opcional — RG, CPF, comprovante de residência, etc.</span></div>
+        <div class="sub">Documentos <span style="font-size:11px;color:#bbb;font-weight:400;text-transform:none;letter-spacing:0">opcional — RG, CPF, comprovante de residência</span></div>
         <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)">
           <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this.files)">
           <div class="upload-icon">📎</div>
@@ -278,66 +278,59 @@ footer span{color:var(--gold)}
         <div class="upload-list" id="uploadList"></div>
       </div>
     </div>
-
     <button class="sub-btn" type="button" id="btnEnviar" onclick="enviar()">
       <div class="spinner" id="spinner"></div>
       <span id="btnTxt">Enviar ficha admissional</span>
     </button>
   </div>
-
   <div class="success" id="successBox">
     <div class="ck">✓</div>
-    <h3>Ficha enviada com sucesso!</h3>
-    <p>Os dados foram recebidos pelo Departamento Pessoal da Pró Eficácia.<br>Em caso de dúvidas, entre em contato com o escritório.</p>
+    <h3 id="successTit">Enviado com sucesso!</h3>
+    <p id="successMsg">Os dados foram recebidos pelo Departamento Pessoal da Pró Eficácia.<br>Em caso de dúvidas, entre em contato com o escritório.</p>
+    <div class="link-func-box" id="linkFuncBox">
+      <div class="lf-tit">📱 Envie este link para o funcionário completar os dados pessoais:</div>
+      <div class="lf-url" id="linkFuncUrl"></div>
+      <button class="lf-btn" onclick="copiarLinkFunc()">📋 Copiar link do funcionário</button>
+    </div>
   </div>
 </div>
 <footer><p>© Pró Eficácia <span>Contabilidade Consultiva</span> — Sistema de Admissão Digital</p></footer>
-
 <script>
 const URL_SB='https://rgelyzzuexghmhpualhm.supabase.co';
 const KEY_SB='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZWx5enp1ZXhnaG1ocHVhbGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTU4MDgsImV4cCI6MjA5Njc3MTgwOH0.vutgtaQ12L4-8GQgdCwdrJjOlG9a0KbSgGnEntXL8eM';
 const DIAS=['seg','ter','qua','qui','sex','sab'];
-let filhoN=0, uploadedFiles=[], modoAtual=null;
+let filhoN=0,uploadedFiles=[],asoFile=null,modo='completo',fichaId=null;
+
+function toggleOri(){
+  document.getElementById('oriHd').classList.toggle('open');
+  document.getElementById('oriBody').classList.toggle('open');
+}
 
 window.addEventListener('DOMContentLoaded',()=>{
-  const p=new URLSearchParams(window.location.search),emp=p.get('empresa'),modo=p.get('modo');
+  const p=new URLSearchParams(window.location.search);
+  const emp=p.get('empresa'),m=p.get('modo'),fid=p.get('ficha');
   if(emp){
     const n=decodeURIComponent(emp);
     document.getElementById('empresa').value=n;
-    document.getElementById('empresa').readOnly=true;
     document.getElementById('empNome').textContent=n;
     document.getElementById('empBar').style.display='block';
   }
-  if(modo==='empresa'||modo==='funcionario'){
-    setMode(modo);
-  } else {
-    document.getElementById('modeBanner').style.display='block';
+  if(m==='funcionario'&&fid){
+    modo='funcionario';fichaId=parseInt(fid);
+    document.getElementById('cardEmpresa').style.display='none';
+    document.getElementById('btnTxt').textContent='Enviar meus dados';
+    if(emp)document.getElementById('empresa').readOnly=true;
+  } else if(m==='empresa'||emp){
+    modo='empresa';
+    document.getElementById('cardFunc').style.display='none';
+    document.getElementById('btnTxt').textContent='Enviar dados da contratação';
+    if(emp)document.getElementById('empresa').readOnly=true;
   }
 });
 
-function setMode(m){
-  modoAtual=m;
-  document.getElementById('modeBanner').style.display='block';
-  document.getElementById('tabEmpresa').classList.toggle('active',m==='empresa');
-  document.getElementById('tabFunc').classList.toggle('active',m==='funcionario');
-  const cemp=document.getElementById('cardEmpresa');
-  const cfun=document.getElementById('cardFunc');
-  if(m==='empresa'){
-    cemp.classList.remove('section-locked');
-    cfun.classList.add('section-locked');
-  } else {
-    cemp.classList.add('section-locked');
-    cfun.classList.remove('section-locked');
-  }
-}
-
 function autoNext(el,nextId){
-  if(el.value&&el.value.length===5){
-    const nx=document.getElementById(nextId);
-    if(nx&&!nx.value) nx.focus();
-  }
+  if(el.value&&el.value.length===5){const nx=document.getElementById(nextId);if(nx&&!nx.value)nx.focus();}
 }
-
 document.getElementById('cpf').addEventListener('input',function(){
   let v=this.value.replace(/\D/g,'').slice(0,11);
   if(v.length>9)v=v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,'$1.$2.$3-$4');
@@ -349,7 +342,7 @@ document.getElementById('cep').addEventListener('input',function(){
   let v=this.value.replace(/\D/g,'').slice(0,8);
   if(v.length>5)v=v.replace(/(\d{5})(\d{1,3})/,'$1-$2');
   this.value=v;
-  if(v.replace('-','').length===8) buscarCep(v.replace('-',''));
+  if(v.replace('-','').length===8)buscarCep(v.replace('-',''));
 });
 async function buscarCep(cep){
   try{
@@ -362,7 +355,6 @@ async function buscarCep(cep){
     }
   }catch(e){}
 }
-
 function timeToMin(t){if(!t)return null;const[h,m]=t.split(':').map(Number);return h*60+m;}
 function minToStr(m){if(m===null||m<0)return'—';return Math.floor(m/60)+'h '+String(m%60).padStart(2,'0')+'min';}
 function calcDia(dia){
@@ -385,9 +377,7 @@ function calcTotal(){
     const sa=document.getElementById(d+'_sa').value;
     if(en&&sa){const m=calcDia(d);if(m)total+=m;}
   });
-  const box=document.getElementById('totalHorasBox');
-  const val=document.getElementById('totalHorasValor');
-  const aviso=document.getElementById('totalAviso');
+  const box=document.getElementById('totalHorasBox'),val=document.getElementById('totalHorasValor'),aviso=document.getElementById('totalAviso');
   val.textContent=minToStr(total);
   if(total>44*60){box.className='total-horas warn';aviso.style.display='block';}
   else{box.className='total-horas'+(total>0?' ok':'');aviso.style.display='none';}
@@ -396,7 +386,14 @@ function copiarDia(origem,destino){
   ['en','ii','ri','sa'].forEach(c=>{document.getElementById(destino+'_'+c).value=document.getElementById(origem+'_'+c).value;});
   calcDia(destino);calcTotal();
 }
-
+function handleAso(files){
+  if(!files.length)return;
+  const f=files[0];
+  if(f.size>5*1024*1024){alert('Arquivo muito grande (máx 5MB)');return;}
+  asoFile=f;
+  document.getElementById('asoList').innerHTML=`<div class="upload-item" style="margin-top:8px"><span>📋</span><span class="ui-name">${f.name}</span><span class="ui-size">${(f.size/1024).toFixed(0)} KB</span><button class="upload-rm" onclick="asoFile=null;document.getElementById('asoList').innerHTML='';document.getElementById('asoInput').value=''">×</button></div>`;
+}
+function handleDropAso(e){e.preventDefault();document.getElementById('uploadAreaAso').classList.remove('drag');handleAso(e.dataTransfer.files);}
 function handleFiles(files){
   for(const f of files){
     if(f.size>5*1024*1024){alert(f.name+': arquivo muito grande (máx 5MB)');continue;}
@@ -405,90 +402,92 @@ function handleFiles(files){
   }
   renderUploads();
 }
-function handleDrop(e){
-  e.preventDefault();
-  document.getElementById('uploadArea').classList.remove('drag');
-  handleFiles(e.dataTransfer.files);
-}
+function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('drag');handleFiles(e.dataTransfer.files);}
 function renderUploads(){
   const list=document.getElementById('uploadList');
-  list.innerHTML=uploadedFiles.map((f,i)=>`<div class="upload-item">
-    <span>📄</span>
-    <span class="ui-name">${f.name}</span>
-    <span class="ui-size">${(f.size/1024).toFixed(0)} KB</span>
-    <button class="upload-rm" onclick="removeFile(${i})">×</button>
-  </div>`).join('');
+  list.innerHTML=uploadedFiles.map((f,i)=>`<div class="upload-item"><span>📄</span><span class="ui-name">${f.name}</span><span class="ui-size">${(f.size/1024).toFixed(0)} KB</span><button class="upload-rm" onclick="removeFile(${i})">×</button></div>`).join('');
 }
 function removeFile(i){uploadedFiles.splice(i,1);renderUploads();}
-
 function toggleFilhos(el){const a=document.getElementById('filhosArea');a.style.display=el.value==='sim'?'block':'none';if(el.value==='sim'&&filhoN===0)addFilho();}
 function addFilho(){filhoN++;const id=filhoN,d=document.createElement('div');d.className='filho-card';d.id='filho_'+id;d.innerHTML=`<button class="filho-rm" type="button" onclick="rmFilho(${id})">×</button><div class="g g2" style="padding-right:28px"><div class="f s2" style="grid-column:span 2"><label>Nome</label><input type="text" id="f${id}_n" placeholder="Nome completo"></div><div class="f"><label>Data de nascimento</label><input type="date" id="f${id}_d"></div><div class="f"><label>CPF</label><input type="text" id="f${id}_c" placeholder="000.000.000-00" maxlength="14"></div></div>`;document.getElementById('filhosList').appendChild(d);}
 function rmFilho(id){const el=document.getElementById('filho_'+id);if(el)el.remove();}
-
 function v(id){return(document.getElementById(id)||{}).value||'';}
 function horarioStr(dia){const en=v(dia+'_en'),sa=v(dia+'_sa'),ii=v(dia+'_ii'),ri=v(dia+'_ri');if(!en||!sa)return'';return`${en} às ${sa}`+(ii&&ri?` | Int: ${ii}–${ri}`:'');}
-
-async function uploadDocumentos(fichaId){
-  if(!uploadedFiles.length)return;
-  for(const f of uploadedFiles){
-    try{
-      const path=`fichas/${fichaId}/${Date.now()}_${f.name}`;
-      await fetch(`${URL_SB}/storage/v1/object/documentos-admissao/${path}`,{
-        method:'POST',
-        headers:{'apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Content-Type':f.type,'x-upsert':'true'},
-        body:f
-      });
-    }catch(e){console.warn('Upload falhou:',f.name,e);}
-  }
+async function uploadArquivo(path,file){
+  try{await fetch(`${URL_SB}/storage/v1/object/documentos-admissao/${path}`,{method:'POST',headers:{'apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Content-Type':file.type,'x-upsert':'true'},body:file});}
+  catch(e){console.warn('Upload falhou:',path);}
 }
-
 async function enviar(){
-  const isFull=!modoAtual;
-  const isEmp=modoAtual==='empresa';
-  const isFun=modoAtual==='funcionario';
+  const btn=document.getElementById('btnEnviar'),sp=document.getElementById('spinner'),bt=document.getElementById('btnTxt');
+  if(modo==='funcionario'){
+    const reqFun=['nome','cpf','mae','rua','numero','cidade','estCivil','raca'];
+    if(!reqFun.every(i=>v(i).trim())){alert('Preencha todos os campos obrigatórios.');return;}
+    btn.disabled=true;sp.style.display='block';bt.textContent='Enviando...';
+    const filhos=[];
+    document.querySelectorAll('[id^=filho_]').forEach(el=>{const id=el.id.replace('filho_','');filhos.push({nome:v('f'+id+'_n'),nasc:v('f'+id+'_d'),cpf:v('f'+id+'_c')});});
+    const data={nome:v('nome'),cpf:v('cpf'),pis:v('pis'),nome_mae:v('mae'),nome_pai:v('pai'),cidade_natal:v('cidNatal'),estado_civil:v('estCivil'),raca_cor:v('raca'),cep:v('cep'),rua:v('rua'),numero:v('numero'),bairro:v('bairro'),complemento:v('comp'),cidade:v('cidade'),filhos:filhos.length?JSON.stringify(filhos):null,status:'novo'};
+    try{
+      const res=await fetch(URL_SB+'/rest/v1/fichas_admissionais?id=eq.'+fichaId,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Prefer':'return=minimal'},body:JSON.stringify(data)});
+      if(!res.ok)throw new Error();
+      for(const f of uploadedFiles)await uploadArquivo(`fichas/${fichaId}/${Date.now()}_${f.name}`,f);
+      document.getElementById('formWrap').style.display='none';
+      document.getElementById('successTit').textContent='Dados enviados com sucesso!';
+      document.getElementById('successMsg').textContent='Seus dados pessoais foram recebidos pelo Departamento Pessoal da Pró Eficácia.';
+      document.getElementById('successBox').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(e){btn.disabled=false;sp.style.display='none';bt.textContent='Enviar meus dados';alert('Erro ao enviar. Tente novamente.');}
+    return;
+  }
   const reqEmp=['empresa','admissao','funcao','salario','contrato'];
-  const reqFun=['nome','cpf','mae','rua','numero','cidade','estCivil','raca'];
   const vt=document.querySelector('input[name=vt]:checked');
-  if((isFull||isEmp)&&(!reqEmp.every(i=>v(i).trim())||!vt)){alert('Preencha todos os campos obrigatórios da empresa.');return;}
-  if((isFull||isFun)&&!reqFun.every(i=>v(i).trim())){alert('Preencha todos os campos obrigatórios do funcionário.');return;}
-  const btn=document.getElementById('btnEnviar');
-  const sp=document.getElementById('spinner');
-  const bt=document.getElementById('btnTxt');
+  if(!reqEmp.every(i=>v(i).trim())||!vt){alert('Preencha todos os campos obrigatórios da contratação.');return;}
+  if(modo==='completo'){
+    const reqFun=['nome','cpf','mae','rua','numero','cidade','estCivil','raca'];
+    if(!reqFun.every(i=>v(i).trim())){alert('Preencha todos os campos obrigatórios do funcionário.');return;}
+  }
   btn.disabled=true;sp.style.display='block';bt.textContent='Enviando...';
   const horarios={};DIAS.forEach(d=>{const s=horarioStr(d);if(s)horarios[d]=s;});
   const filhos=[];
   document.querySelectorAll('[id^=filho_]').forEach(el=>{const id=el.id.replace('filho_','');filhos.push({nome:v('f'+id+'_n'),nasc:v('f'+id+'_d'),cpf:v('f'+id+'_c')});});
+  const isFull=modo==='completo';
   const data={
     empresa:v('empresa')||null,admissao:v('admissao')||null,funcao:v('funcao')||null,
-    salario:v('salario')||null,contrato:v('contrato')||null,
-    vale_transporte:vt?vt.value:null,
+    salario:v('salario')||null,contrato:v('contrato')||null,vale_transporte:vt.value,
     horario_seg_sex:[horarios.seg,horarios.ter,horarios.qua,horarios.qui,horarios.sex].filter(Boolean).join(' | ')||null,
     horario_sabado:horarios.sab||null,
-    nome:v('nome')||null,cpf:v('cpf')||null,pis:v('pis')||null,
-    nome_mae:v('mae')||null,nome_pai:v('pai')||null,
-    cidade_natal:v('cidNatal')||null,estado_civil:v('estCivil')||null,raca_cor:v('raca')||null,
-    cep:v('cep')||null,rua:v('rua')||null,numero:v('numero')||null,
-    bairro:v('bairro')||null,complemento:v('comp')||null,cidade:v('cidade')||null,
-    filhos:filhos.length?JSON.stringify(filhos):null,
-    status:isFun?'aguardando_empresa':'novo'
+    nome:isFull?(v('nome')||null):null,cpf:isFull?(v('cpf')||null):null,pis:isFull?(v('pis')||null):null,
+    nome_mae:isFull?(v('mae')||null):null,nome_pai:isFull?(v('pai')||null):null,
+    cidade_natal:isFull?(v('cidNatal')||null):null,estado_civil:isFull?(v('estCivil')||null):null,
+    raca_cor:isFull?(v('raca')||null):null,cep:isFull?(v('cep')||null):null,
+    rua:isFull?(v('rua')||null):null,numero:isFull?(v('numero')||null):null,
+    bairro:isFull?(v('bairro')||null):null,complemento:isFull?(v('comp')||null):null,
+    cidade:isFull?(v('cidade')||null):null,
+    filhos:isFull&&filhos.length?JSON.stringify(filhos):null,
+    status:modo==='empresa'?'aguardando_funcionario':'novo'
   };
   try{
-    const res=await fetch(URL_SB+'/rest/v1/fichas_admissionais',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Prefer':'return=representation'},
-      body:JSON.stringify(data)
-    });
+    const res=await fetch(URL_SB+'/rest/v1/fichas_admissionais',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Prefer':'return=representation'},body:JSON.stringify(data)});
     if(!res.ok){const e=await res.text();console.error(e);throw new Error();}
     const result=await res.json();
-    const fichaId=result[0]?.id;
-    if(fichaId&&uploadedFiles.length) await uploadDocumentos(fichaId);
+    const newId=result[0]?.id;
+    if(newId&&asoFile)await uploadArquivo(`fichas/${newId}/ASO_${Date.now()}_${asoFile.name}`,asoFile);
+    if(newId&&isFull)for(const f of uploadedFiles)await uploadArquivo(`fichas/${newId}/${Date.now()}_${f.name}`,f);
     document.getElementById('formWrap').style.display='none';
     document.getElementById('successBox').style.display='block';
     window.scrollTo({top:0,behavior:'smooth'});
-  }catch(e){
-    btn.disabled=false;sp.style.display='none';bt.textContent='Enviar ficha admissional';
-    alert('Erro ao enviar. Verifique os dados e tente novamente.');
-  }
+    if(modo==='empresa'&&newId){
+      const emp=encodeURIComponent(v('empresa'));
+      const linkFunc=`${window.location.origin}/form.html?modo=funcionario&ficha=${newId}&empresa=${emp}`;
+      document.getElementById('linkFuncUrl').textContent=linkFunc;
+      document.getElementById('linkFuncBox').style.display='block';
+      document.getElementById('successTit').textContent='Dados da contratação enviados!';
+      document.getElementById('successMsg').textContent='Envie o link abaixo para o funcionário preencher os dados pessoais:';
+    }
+  }catch(e){btn.disabled=false;sp.style.display='none';bt.textContent='Enviar ficha admissional';alert('Erro ao enviar. Verifique os dados e tente novamente.');}
+}
+function copiarLinkFunc(){
+  const url=document.getElementById('linkFuncUrl').textContent;
+  navigator.clipboard.writeText(url).then(()=>{const b=event.target;b.textContent='✓ Copiado!';setTimeout(()=>b.textContent='📋 Copiar link do funcionário',2000);});
 }
 </script>
 </body>
