@@ -156,12 +156,12 @@ footer span{color:var(--gold)}
     <div class="modo-tab active" id="tabEmp" onclick="setModo('empresa')">
       <div class="mt-icon">🏢</div>
       <div class="mt-title">Sou a Empresa</div>
-      <div class="mt-sub">Preencher dados da contratação</div>
+      <div class="mt-sub">Preencher só dados da contratação</div>
     </div>
     <div class="modo-tab" id="tabTudo" onclick="setModo('tudo')">
       <div class="mt-icon">📋</div>
       <div class="mt-title">Preencher tudo</div>
-      <div class="mt-sub">Empresa + dados do funcionário</div>
+      <div class="mt-sub">Contratação + dados do funcionário</div>
     </div>
   </div>
 </div>
@@ -187,54 +187,12 @@ footer span{color:var(--gold)}
         <table class="hor-table">
           <thead><tr><th>Dia</th><th>Entrada</th><th>Iníc. intervalo</th><th>Ret. intervalo</th><th>Saída</th><th>Total</th></tr></thead>
           <tbody>
-            <tr>
-              <td><div class="day-label">Segunda</div></td>
-              <td><input type="time" id="seg_en" oninput="autoNext(this,'seg_ii');calcDia('seg');calcTotal()"></td>
-              <td><input type="time" id="seg_ii" oninput="autoNext(this,'seg_ri');calcDia('seg');calcTotal()"></td>
-              <td><input type="time" id="seg_ri" oninput="autoNext(this,'seg_sa');calcDia('seg');calcTotal()"></td>
-              <td><input type="time" id="seg_sa" oninput="calcDia('seg');calcTotal()"></td>
-              <td><div class="day-total" id="seg_tot">—</div></td>
-            </tr>
-            <tr>
-              <td><div class="day-label">Terça<button class="copy-btn" type="button" onclick="copiarDia('seg','ter')">↑ copiar</button></div></td>
-              <td><input type="time" id="ter_en" oninput="autoNext(this,'ter_ii');calcDia('ter');calcTotal()"></td>
-              <td><input type="time" id="ter_ii" oninput="autoNext(this,'ter_ri');calcDia('ter');calcTotal()"></td>
-              <td><input type="time" id="ter_ri" oninput="autoNext(this,'ter_sa');calcDia('ter');calcTotal()"></td>
-              <td><input type="time" id="ter_sa" oninput="calcDia('ter');calcTotal()"></td>
-              <td><div class="day-total" id="ter_tot">—</div></td>
-            </tr>
-            <tr>
-              <td><div class="day-label">Quarta<button class="copy-btn" type="button" onclick="copiarDia('ter','qua')">↑ copiar</button></div></td>
-              <td><input type="time" id="qua_en" oninput="autoNext(this,'qua_ii');calcDia('qua');calcTotal()"></td>
-              <td><input type="time" id="qua_ii" oninput="autoNext(this,'qua_ri');calcDia('qua');calcTotal()"></td>
-              <td><input type="time" id="qua_ri" oninput="autoNext(this,'qua_sa');calcDia('qua');calcTotal()"></td>
-              <td><input type="time" id="qua_sa" oninput="calcDia('qua');calcTotal()"></td>
-              <td><div class="day-total" id="qua_tot">—</div></td>
-            </tr>
-            <tr>
-              <td><div class="day-label">Quinta<button class="copy-btn" type="button" onclick="copiarDia('qua','qui')">↑ copiar</button></div></td>
-              <td><input type="time" id="qui_en" oninput="autoNext(this,'qui_ii');calcDia('qui');calcTotal()"></td>
-              <td><input type="time" id="qui_ii" oninput="autoNext(this,'qui_ri');calcDia('qui');calcTotal()"></td>
-              <td><input type="time" id="qui_ri" oninput="autoNext(this,'qui_sa');calcDia('qui');calcTotal()"></td>
-              <td><input type="time" id="qui_sa" oninput="calcDia('qui');calcTotal()"></td>
-              <td><div class="day-total" id="qui_tot">—</div></td>
-            </tr>
-            <tr>
-              <td><div class="day-label">Sexta<button class="copy-btn" type="button" onclick="copiarDia('qui','sex')">↑ copiar</button></div></td>
-              <td><input type="time" id="sex_en" oninput="autoNext(this,'sex_ii');calcDia('sex');calcTotal()"></td>
-              <td><input type="time" id="sex_ii" oninput="autoNext(this,'sex_ri');calcDia('sex');calcTotal()"></td>
-              <td><input type="time" id="sex_ri" oninput="autoNext(this,'sex_sa');calcDia('sex');calcTotal()"></td>
-              <td><input type="time" id="sex_sa" oninput="calcDia('sex');calcTotal()"></td>
-              <td><div class="day-total" id="sex_tot">—</div></td>
-            </tr>
-            <tr>
-              <td><div class="day-label">Sábado<span class="opt-tag">opcional</span><button class="copy-btn" type="button" onclick="copiarDia('sex','sab')">↑ copiar</button></div></td>
-              <td><input type="time" id="sab_en" oninput="autoNext(this,'sab_ii');calcDia('sab');calcTotal()"></td>
-              <td><input type="time" id="sab_ii" oninput="autoNext(this,'sab_ri');calcDia('sab');calcTotal()"></td>
-              <td><input type="time" id="sab_ri" oninput="autoNext(this,'sab_sa');calcDia('sab');calcTotal()"></td>
-              <td><input type="time" id="sab_sa" oninput="calcDia('sab');calcTotal()"></td>
-              <td><div class="day-total" id="sab_tot">—</div></td>
-            </tr>
+            <tr><td><div class="day-label">Segunda</div></td><td><input type="time" id="seg_en" oninput="autoNext(this,'seg_ii');calcDia('seg');calcTotal()"></td><td><input type="time" id="seg_ii" oninput="autoNext(this,'seg_ri');calcDia('seg');calcTotal()"></td><td><input type="time" id="seg_ri" oninput="autoNext(this,'seg_sa');calcDia('seg');calcTotal()"></td><td><input type="time" id="seg_sa" oninput="calcDia('seg');calcTotal()"></td><td><div class="day-total" id="seg_tot">—</div></td></tr>
+            <tr><td><div class="day-label">Terça<button class="copy-btn" type="button" onclick="copiarDia('seg','ter')">↑ copiar</button></div></td><td><input type="time" id="ter_en" oninput="autoNext(this,'ter_ii');calcDia('ter');calcTotal()"></td><td><input type="time" id="ter_ii" oninput="autoNext(this,'ter_ri');calcDia('ter');calcTotal()"></td><td><input type="time" id="ter_ri" oninput="autoNext(this,'ter_sa');calcDia('ter');calcTotal()"></td><td><input type="time" id="ter_sa" oninput="calcDia('ter');calcTotal()"></td><td><div class="day-total" id="ter_tot">—</div></td></tr>
+            <tr><td><div class="day-label">Quarta<button class="copy-btn" type="button" onclick="copiarDia('ter','qua')">↑ copiar</button></div></td><td><input type="time" id="qua_en" oninput="autoNext(this,'qua_ii');calcDia('qua');calcTotal()"></td><td><input type="time" id="qua_ii" oninput="autoNext(this,'qua_ri');calcDia('qua');calcTotal()"></td><td><input type="time" id="qua_ri" oninput="autoNext(this,'qua_sa');calcDia('qua');calcTotal()"></td><td><input type="time" id="qua_sa" oninput="calcDia('qua');calcTotal()"></td><td><div class="day-total" id="qua_tot">—</div></td></tr>
+            <tr><td><div class="day-label">Quinta<button class="copy-btn" type="button" onclick="copiarDia('qua','qui')">↑ copiar</button></div></td><td><input type="time" id="qui_en" oninput="autoNext(this,'qui_ii');calcDia('qui');calcTotal()"></td><td><input type="time" id="qui_ii" oninput="autoNext(this,'qui_ri');calcDia('qui');calcTotal()"></td><td><input type="time" id="qui_ri" oninput="autoNext(this,'qui_sa');calcDia('qui');calcTotal()"></td><td><input type="time" id="qui_sa" oninput="calcDia('qui');calcTotal()"></td><td><div class="day-total" id="qui_tot">—</div></td></tr>
+            <tr><td><div class="day-label">Sexta<button class="copy-btn" type="button" onclick="copiarDia('qui','sex')">↑ copiar</button></div></td><td><input type="time" id="sex_en" oninput="autoNext(this,'sex_ii');calcDia('sex');calcTotal()"></td><td><input type="time" id="sex_ii" oninput="autoNext(this,'sex_ri');calcDia('sex');calcTotal()"></td><td><input type="time" id="sex_ri" oninput="autoNext(this,'sex_sa');calcDia('sex');calcTotal()"></td><td><input type="time" id="sex_sa" oninput="calcDia('sex');calcTotal()"></td><td><div class="day-total" id="sex_tot">—</div></td></tr>
+            <tr><td><div class="day-label">Sábado<span class="opt-tag">opcional</span><button class="copy-btn" type="button" onclick="copiarDia('sex','sab')">↑ copiar</button></div></td><td><input type="time" id="sab_en" oninput="autoNext(this,'sab_ii');calcDia('sab');calcTotal()"></td><td><input type="time" id="sab_ii" oninput="autoNext(this,'sab_ri');calcDia('sab');calcTotal()"></td><td><input type="time" id="sab_ri" oninput="autoNext(this,'sab_sa');calcDia('sab');calcTotal()"></td><td><input type="time" id="sab_sa" oninput="calcDia('sab');calcTotal()"></td><td><div class="day-total" id="sab_tot">—</div></td></tr>
           </tbody>
         </table>
         <div class="total-horas" id="totalHorasBox">
@@ -323,13 +281,8 @@ const KEY_SB='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const DIAS=['seg','ter','qua','qui','sex','sab'];
 let filhoN=0,uploadedFiles=[],asoFile=null,modo='empresa',fichaId=null;
 
-// Converte texto para caixa alta antes de enviar
 function upper(s){return s?s.toUpperCase():null;}
-
-function toggleOri(){
-  document.getElementById('oriHd').classList.toggle('open');
-  document.getElementById('oriBody').classList.toggle('open');
-}
+function toggleOri(){document.getElementById('oriHd').classList.toggle('open');document.getElementById('oriBody').classList.toggle('open');}
 
 function setModo(m){
   modo=m;
@@ -361,9 +314,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
 });
 
-function autoNext(el,nextId){
-  if(el.value&&el.value.length===5){const nx=document.getElementById(nextId);if(nx&&!nx.value)nx.focus();}
-}
+function autoNext(el,nextId){if(el.value&&el.value.length===5){const nx=document.getElementById(nextId);if(nx&&!nx.value)nx.focus();}}
 
 document.getElementById('cpf').addEventListener('input',function(){
   let v=this.value.replace(/\D/g,'').slice(0,11);
@@ -372,14 +323,12 @@ document.getElementById('cpf').addEventListener('input',function(){
   else if(v.length>3)v=v.replace(/(\d{3})(\d{1,3})/,'$1.$2');
   this.value=v;
 });
-
 document.getElementById('cep').addEventListener('input',function(){
   let v=this.value.replace(/\D/g,'').slice(0,8);
   if(v.length>5)v=v.replace(/(\d{5})(\d{1,3})/,'$1-$2');
   this.value=v;
   if(v.replace('-','').length===8)buscarCep(v.replace('-',''));
 });
-
 async function buscarCep(cep){
   try{
     const r=await fetch('https://viacep.com.br/ws/'+cep+'/json/'),d=await r.json();
@@ -391,7 +340,6 @@ async function buscarCep(cep){
     }
   }catch(e){}
 }
-
 function timeToMin(t){if(!t)return null;const[h,m]=t.split(':').map(Number);return h*60+m;}
 function minToStr(m){if(m===null||m<0)return'—';return Math.floor(m/60)+'h '+String(m%60).padStart(2,'0')+'min';}
 function calcDia(dia){
@@ -401,48 +349,33 @@ function calcDia(dia){
   const sa=timeToMin(document.getElementById(dia+'_sa').value);
   const tot=document.getElementById(dia+'_tot');
   if(en===null||sa===null){tot.textContent='—';return null;}
-  let mins=sa-en;
-  if(ii!==null&&ri!==null&&ri>ii)mins-=(ri-ii);
-  tot.textContent=minToStr(mins);
-  tot.style.color=mins>0?'var(--navy)':'var(--red)';
+  let mins=sa-en;if(ii!==null&&ri!==null&&ri>ii)mins-=(ri-ii);
+  tot.textContent=minToStr(mins);tot.style.color=mins>0?'var(--navy)':'var(--red)';
   return mins>0?mins:0;
 }
 function calcTotal(){
   let total=0;
-  DIAS.forEach(d=>{
-    const en=document.getElementById(d+'_en').value;
-    const sa=document.getElementById(d+'_sa').value;
-    if(en&&sa){const m=calcDia(d);if(m)total+=m;}
-  });
+  DIAS.forEach(d=>{const en=document.getElementById(d+'_en').value,sa=document.getElementById(d+'_sa').value;if(en&&sa){const m=calcDia(d);if(m)total+=m;}});
   const box=document.getElementById('totalHorasBox'),val=document.getElementById('totalHorasValor'),aviso=document.getElementById('totalAviso');
   val.textContent=minToStr(total);
   if(total>44*60){box.className='total-horas warn';aviso.style.display='block';}
   else{box.className='total-horas'+(total>0?' ok':'');aviso.style.display='none';}
 }
-function copiarDia(origem,destino){
-  ['en','ii','ri','sa'].forEach(c=>{document.getElementById(destino+'_'+c).value=document.getElementById(origem+'_'+c).value;});
-  calcDia(destino);calcTotal();
-}
+function copiarDia(origem,destino){['en','ii','ri','sa'].forEach(c=>{document.getElementById(destino+'_'+c).value=document.getElementById(origem+'_'+c).value;});calcDia(destino);calcTotal();}
 function handleAso(files){
-  if(!files.length)return;
-  const f=files[0];
+  if(!files.length)return;const f=files[0];
   if(f.size>5*1024*1024){alert('Arquivo muito grande (máx 5MB)');return;}
   asoFile=f;
   document.getElementById('asoList').innerHTML=`<div class="upload-item" style="margin-top:8px"><span>📋</span><span class="ui-name">${f.name}</span><span class="ui-size">${(f.size/1024).toFixed(0)} KB</span><button class="upload-rm" onclick="asoFile=null;document.getElementById('asoList').innerHTML='';document.getElementById('asoInput').value=''">×</button></div>`;
 }
 function handleDropAso(e){e.preventDefault();document.getElementById('uploadAreaAso').classList.remove('drag');handleAso(e.dataTransfer.files);}
 function handleFiles(files){
-  for(const f of files){
-    if(f.size>5*1024*1024){alert(f.name+': muito grande (máx 5MB)');continue;}
-    if(uploadedFiles.find(x=>x.name===f.name&&x.size===f.size))continue;
-    uploadedFiles.push(f);
-  }
+  for(const f of files){if(f.size>5*1024*1024){alert(f.name+': muito grande');continue;}if(uploadedFiles.find(x=>x.name===f.name&&x.size===f.size))continue;uploadedFiles.push(f);}
   renderUploads();
 }
 function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('drag');handleFiles(e.dataTransfer.files);}
 function renderUploads(){
-  const list=document.getElementById('uploadList');
-  list.innerHTML=uploadedFiles.map((f,i)=>`<div class="upload-item"><span>📄</span><span class="ui-name">${f.name}</span><span class="ui-size">${(f.size/1024).toFixed(0)} KB</span><button class="upload-rm" onclick="removeFile(${i})">×</button></div>`).join('');
+  document.getElementById('uploadList').innerHTML=uploadedFiles.map((f,i)=>`<div class="upload-item"><span>📄</span><span class="ui-name">${f.name}</span><span class="ui-size">${(f.size/1024).toFixed(0)} KB</span><button class="upload-rm" onclick="removeFile(${i})">×</button></div>`).join('');
 }
 function removeFile(i){uploadedFiles.splice(i,1);renderUploads();}
 function toggleFilhos(el){const a=document.getElementById('filhosArea');a.style.display=el.value==='sim'?'block':'none';if(el.value==='sim'&&filhoN===0)addFilho();}
@@ -450,9 +383,16 @@ function addFilho(){filhoN++;const id=filhoN,d=document.createElement('div');d.c
 function rmFilho(id){const el=document.getElementById('filho_'+id);if(el)el.remove();}
 function v(id){return(document.getElementById(id)||{}).value||'';}
 function horarioStr(dia){const en=v(dia+'_en'),sa=v(dia+'_sa'),ii=v(dia+'_ii'),ri=v(dia+'_ri');if(!en||!sa)return'';return`${en} às ${sa}`+(ii&&ri?` | Int: ${ii}–${ri}`:'');}
+
+// UPLOAD SEM Authorization para usuário anônimo
 async function uploadArquivo(path,file){
-  try{await fetch(`${URL_SB}/storage/v1/object/documentos-admissao/${path}`,{method:'POST',headers:{'apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Content-Type':file.type,'x-upsert':'true'},body:file});}
-  catch(e){console.warn('Upload falhou:',path);}
+  try{
+    await fetch(`${URL_SB}/storage/v1/object/documentos-admissao/${path}`,{
+      method:'POST',
+      headers:{'apikey':KEY_SB,'Content-Type':file.type,'x-upsert':'true'},
+      body:file
+    });
+  }catch(e){console.warn('Upload falhou:',path);}
 }
 
 async function enviar(){
@@ -467,19 +407,19 @@ async function enviar(){
     const data={
       nome:upper(v('nome')),cpf:v('cpf'),pis:v('pis')||null,
       nome_mae:upper(v('mae')),nome_pai:upper(v('pai'))||null,
-      cidade_natal:upper(v('cidNatal'))||null,
-      estado_civil:v('estCivil'),raca_cor:v('raca'),
+      cidade_natal:upper(v('cidNatal'))||null,estado_civil:v('estCivil'),raca_cor:v('raca'),
       cep:v('cep')||null,rua:upper(v('rua')),numero:v('numero'),
       bairro:upper(v('bairro'))||null,complemento:upper(v('comp'))||null,cidade:upper(v('cidade')),
       filhos:filhos.length?JSON.stringify(filhos):null,status:'novo'
     };
     try{
+      // PATCH também sem Authorization para anon
       const res=await fetch(`${URL_SB}/rest/v1/fichas_admissionais?id=eq.${fichaId}`,{
         method:'PATCH',
-        headers:{'Content-Type':'application/json','apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Prefer':'return=minimal'},
+        headers:{'Content-Type':'application/json','apikey':KEY_SB,'Prefer':'return=minimal'},
         body:JSON.stringify(data)
       });
-      if(!res.ok){const e=await res.text();console.error('PATCH error:',e);throw new Error();}
+      if(!res.ok){const e=await res.text();console.error(e);throw new Error();}
       for(const f of uploadedFiles)await uploadArquivo(`fichas/${fichaId}/${Date.now()}_${f.name}`,f);
       document.getElementById('formWrap').style.display='none';
       document.getElementById('successTit').textContent='Dados enviados com sucesso!';
@@ -518,12 +458,13 @@ async function enviar(){
     status:isTudo?'novo':'aguardando_funcionario'
   };
   try{
+    // POST sem Authorization — requisição anônima
     const res=await fetch(`${URL_SB}/rest/v1/fichas_admissionais`,{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Prefer':'return=representation'},
+      headers:{'Content-Type':'application/json','apikey':KEY_SB,'Prefer':'return=representation'},
       body:JSON.stringify(data)
     });
-    if(!res.ok){const e=await res.text();console.error('POST error:',e);throw new Error();}
+    if(!res.ok){const e=await res.text();console.error('Erro POST:',e);throw new Error();}
     const result=await res.json();
     const newId=result[0]?.id;
     if(newId&&asoFile)await uploadArquivo(`fichas/${newId}/ASO_${Date.now()}_${asoFile.name}`,asoFile);
@@ -541,6 +482,7 @@ async function enviar(){
     }
   }catch(e){btn.disabled=false;sp.style.display='none';bt.textContent='Enviar ficha admissional';alert('Erro ao enviar. Verifique os dados e tente novamente.');}
 }
+
 function copiarLinkFunc(){
   const url=document.getElementById('linkFuncUrl').textContent;
   navigator.clipboard.writeText(url).then(()=>{const b=event.target;b.textContent='✓ Copiado!';setTimeout(()=>b.textContent='📋 Copiar link do funcionário',2000);});
