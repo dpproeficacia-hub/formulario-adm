@@ -34,7 +34,6 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .ori-item:last-child{margin-bottom:0}
 .ori-icon{font-size:16px;flex-shrink:0;margin-top:1px}
 .ori-warn{background:#FFF3E0;border:1px solid #FFB74D;border-radius:8px;padding:11px 14px;margin-top:10px;font-size:12px;color:#E65100;line-height:1.5}
-/* MODO SELETOR */
 .modo-banner{display:none;max-width:760px;margin:14px auto 0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .modo-tabs{display:grid;grid-template-columns:1fr 1fr}
 .modo-tab{padding:16px;text-align:center;cursor:pointer;background:var(--off);border:2px solid var(--border);transition:all .2s;font-family:'Inter',sans-serif}
@@ -58,9 +57,11 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .f{display:flex;flex-direction:column;gap:4px}
 .f label{font-size:12px;font-weight:500;color:var(--muted)}
 .f label .r{color:var(--gold)}
-.f input,.f select{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;transition:border .15s}
+.f input,.f select{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;transition:border .15s;text-transform:uppercase}
 .f input:focus,.f select:focus{outline:none;border-color:var(--gold);background:#fff}
-.f input::placeholder{color:#ccc}
+.f input::placeholder{color:#ccc;text-transform:none}
+.f input[type=date],.f input[type=time]{text-transform:none}
+.f select{text-transform:none}
 .f input:read-only{background:#f0f0f0;color:#999;cursor:not-allowed}
 .rr{display:flex;gap:16px;height:40px;align-items:center}
 .rr label{display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
@@ -77,7 +78,7 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .hor-table tr:hover td{background:var(--off)}
 .hor-table .day-label{font-size:13px;font-weight:500;color:var(--navy);padding-left:8px;white-space:nowrap}
 .hor-table .opt-tag{font-size:10px;color:#bbb;font-weight:400;margin-left:4px}
-.hor-table input[type=time]{height:34px;padding:0 6px;border:1.5px solid var(--border);border-radius:6px;background:var(--off);color:var(--text);font-size:13px;font-family:'Inter',sans-serif;width:100%;min-width:85px}
+.hor-table input[type=time]{height:34px;padding:0 6px;border:1.5px solid var(--border);border-radius:6px;background:var(--off);color:var(--text);font-size:13px;font-family:'Inter',sans-serif;width:100%;min-width:85px;text-transform:none}
 .hor-table input[type=time]:focus{outline:none;border-color:var(--gold);background:#fff}
 .hor-table .day-total{font-size:12px;font-weight:600;color:var(--navy);text-align:center;min-width:48px}
 .copy-btn{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:500;color:var(--navy);background:var(--goldpale);border:1px solid var(--gold);border-radius:5px;padding:3px 7px;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;margin-left:6px}
@@ -139,7 +140,6 @@ footer span{color:var(--gold)}
 <div class="emp-bar" id="empBar">
   <div class="emp-bar-in"><span class="tag">Empresa</span><span class="nome" id="empNome"></span></div>
 </div>
-
 <div class="orientacoes">
   <div class="ori-hd" id="oriHd" onclick="toggleOri()">
     <span>📋 Orientações de preenchimento</span><span class="arr">▼</span>
@@ -151,27 +151,22 @@ footer span{color:var(--gold)}
     <div class="ori-warn">⚠️ <strong>Atenção:</strong> Registros retroativos ou na data do preenchimento poderão sofrer <strong>penalidades</strong>, incluindo multas e fiscalizações do Ministério do Trabalho.</div>
   </div>
 </div>
-
-<!-- SELETOR DE MODO — só aparece quando NÃO vem ?modo= na URL -->
 <div class="modo-banner" id="modoBanner">
   <div class="modo-tabs">
-    <div class="modo-tab" id="tabEmp" onclick="setModo('empresa')">
+    <div class="modo-tab active" id="tabEmp" onclick="setModo('empresa')">
       <div class="mt-icon">🏢</div>
       <div class="mt-title">Sou a Empresa</div>
       <div class="mt-sub">Preencher dados da contratação</div>
     </div>
-    <div class="modo-tab" id="tabFunc" onclick="setModo('tudo')">
+    <div class="modo-tab" id="tabTudo" onclick="setModo('tudo')">
       <div class="mt-icon">📋</div>
       <div class="mt-title">Preencher tudo</div>
       <div class="mt-sub">Empresa + dados do funcionário</div>
     </div>
   </div>
 </div>
-
 <div class="wrap">
   <div id="formWrap">
-
-    <!-- CARD EMPRESA -->
     <div class="card" id="cardEmpresa">
       <div class="card-hd"><h2>Dados da contratação</h2><span class="badge">Preenchido pela empresa</span></div>
       <div class="card-body">
@@ -256,31 +251,29 @@ footer span{color:var(--gold)}
         <div id="asoList"></div>
       </div>
     </div>
-
-    <!-- CARD FUNCIONÁRIO -->
     <div class="card" id="cardFunc" style="display:none">
       <div class="card-hd"><h2>Dados do funcionário</h2><span class="badge">Preenchido pelo funcionário</span></div>
       <div class="card-body">
         <div class="g g2">
           <div class="f s2"><label>Nome completo <span class="r">*</span></label><input type="text" id="nome" placeholder="Nome completo conforme documentos"></div>
-          <div class="f"><label>CPF <span class="r">*</span></label><input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14"></div>
-          <div class="f"><label>PIS / PASEP</label><input type="text" id="pis" placeholder="000.00000.00-0"></div>
+          <div class="f"><label>CPF <span class="r">*</span></label><input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" style="text-transform:none"></div>
+          <div class="f"><label>PIS / PASEP</label><input type="text" id="pis" placeholder="000.00000.00-0" style="text-transform:none"></div>
           <div class="f"><label>Nome da mãe <span class="r">*</span></label><input type="text" id="mae" placeholder="Nome completo"></div>
           <div class="f"><label>Nome do pai</label><input type="text" id="pai" placeholder="Nome completo"></div>
           <div class="f"><label>Cidade natal</label><input type="text" id="cidNatal" placeholder="Cidade / UF"></div>
           <div class="f"><label>Estado civil <span class="r">*</span></label>
-            <select id="estCivil"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>Separado(a) judicialmente</option></select>
+            <select id="estCivil"><option value="">Selecione</option><option>SOLTEIRO(A)</option><option>CASADO(A)</option><option>UNIÃO ESTÁVEL</option><option>DIVORCIADO(A)</option><option>VIÚVO(A)</option><option>SEPARADO(A) JUDICIALMENTE</option></select>
           </div>
           <div class="f"><label>Raça / Cor <span class="r">*</span></label>
-            <select id="raca"><option value="">Selecione</option><option>Branca</option><option>Preta</option><option>Parda</option><option>Amarela</option><option>Indígena</option><option>Não declarado</option></select>
+            <select id="raca"><option value="">Selecione</option><option>BRANCA</option><option>PRETA</option><option>PARDA</option><option>AMARELA</option><option>INDÍGENA</option><option>NÃO DECLARADO</option></select>
           </div>
         </div>
         <div class="dv"></div>
         <div class="sub">Endereço</div>
         <div class="g g2">
-          <div class="f"><label>CEP</label><input type="text" id="cep" placeholder="00000-000" maxlength="9"></div>
+          <div class="f"><label>CEP</label><input type="text" id="cep" placeholder="00000-000" maxlength="9" style="text-transform:none"></div>
           <div class="f"><label>Rua / Avenida <span class="r">*</span></label><input type="text" id="rua" placeholder="Nome do logradouro"></div>
-          <div class="f"><label>Número <span class="r">*</span></label><input type="text" id="numero" placeholder="Ex: 123"></div>
+          <div class="f"><label>Número <span class="r">*</span></label><input type="text" id="numero" placeholder="Ex: 123" style="text-transform:none"></div>
           <div class="f"><label>Bairro</label><input type="text" id="bairro" placeholder="Bairro"></div>
           <div class="f"><label>Complemento</label><input type="text" id="comp" placeholder="Apto, bloco..."></div>
           <div class="f s2"><label>Cidade / UF <span class="r">*</span></label><input type="text" id="cidade" placeholder="Cidade / Estado"></div>
@@ -307,13 +300,11 @@ footer span{color:var(--gold)}
         <div class="upload-list" id="uploadList"></div>
       </div>
     </div>
-
     <button class="sub-btn" type="button" id="btnEnviar" onclick="enviar()">
       <div class="spinner" id="spinner"></div>
-      <span id="btnTxt">Enviar ficha admissional</span>
+      <span id="btnTxt">Enviar dados da contratação</span>
     </button>
   </div>
-
   <div class="success" id="successBox">
     <div class="ck">✓</div>
     <h3 id="successTit">Enviado com sucesso!</h3>
@@ -326,14 +317,14 @@ footer span{color:var(--gold)}
   </div>
 </div>
 <footer><p>© Pró Eficácia <span>Contabilidade Consultiva</span> — Sistema de Admissão Digital</p></footer>
-
 <script>
 const URL_SB='https://rgelyzzuexghmhpualhm.supabase.co';
 const KEY_SB='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZWx5enp1ZXhnaG1ocHVhbGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTU4MDgsImV4cCI6MjA5Njc3MTgwOH0.vutgtaQ12L4-8GQgdCwdrJjOlG9a0KbSgGnEntXL8eM';
 const DIAS=['seg','ter','qua','qui','sex','sab'];
-let filhoN=0, uploadedFiles=[], asoFile=null;
-// modo: 'empresa' = só contratação | 'tudo' = tudo | 'funcionario' = só funcionário
-let modo='empresa', fichaId=null;
+let filhoN=0,uploadedFiles=[],asoFile=null,modo='empresa',fichaId=null;
+
+// Converte texto para caixa alta antes de enviar
+function upper(s){return s?s.toUpperCase():null;}
 
 function toggleOri(){
   document.getElementById('oriHd').classList.toggle('open');
@@ -342,47 +333,36 @@ function toggleOri(){
 
 function setModo(m){
   modo=m;
-  document.getElementById('tabEmp').classList.toggle('active', m==='empresa');
-  document.getElementById('tabFunc').classList.toggle('active', m==='tudo');
-  document.getElementById('cardFunc').style.display = m==='tudo' ? 'block' : 'none';
-  document.getElementById('btnTxt').textContent = m==='tudo' ? 'Enviar ficha completa' : 'Enviar dados da contratação';
+  document.getElementById('tabEmp').classList.toggle('active',m==='empresa');
+  document.getElementById('tabTudo').classList.toggle('active',m==='tudo');
+  document.getElementById('cardFunc').style.display=m==='tudo'?'block':'none';
+  document.getElementById('btnTxt').textContent=m==='tudo'?'Enviar ficha completa':'Enviar dados da contratação';
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
   const p=new URLSearchParams(window.location.search);
-  const emp=p.get('empresa');
-  const m=p.get('modo');
-  const fid=p.get('ficha');
-
+  const emp=p.get('empresa'),m=p.get('modo'),fid=p.get('ficha');
   if(emp){
-    const n=decodeURIComponent(emp);
+    const n=decodeURIComponent(emp).toUpperCase();
     document.getElementById('empresa').value=n;
     document.getElementById('empresa').readOnly=true;
     document.getElementById('empNome').textContent=n;
     document.getElementById('empBar').style.display='block';
   }
-
-  if(m==='funcionario' && fid){
-    // Funcionário completando ficha já criada
-    modo='funcionario';
-    fichaId=parseInt(fid);
+  if(m==='funcionario'&&fid){
+    modo='funcionario';fichaId=parseInt(fid);
     document.getElementById('cardEmpresa').style.display='none';
     document.getElementById('cardFunc').style.display='block';
     document.getElementById('modoBanner').style.display='none';
     document.getElementById('btnTxt').textContent='Enviar meus dados';
   } else {
-    // Empresa acessando — mostra seletor de modo
     document.getElementById('modoBanner').style.display='block';
-    // Padrão: modo empresa (só contratação)
     setModo('empresa');
   }
 });
 
 function autoNext(el,nextId){
-  if(el.value && el.value.length===5){
-    const nx=document.getElementById(nextId);
-    if(nx && !nx.value) nx.focus();
-  }
+  if(el.value&&el.value.length===5){const nx=document.getElementById(nextId);if(nx&&!nx.value)nx.focus();}
 }
 
 document.getElementById('cpf').addEventListener('input',function(){
@@ -397,16 +377,16 @@ document.getElementById('cep').addEventListener('input',function(){
   let v=this.value.replace(/\D/g,'').slice(0,8);
   if(v.length>5)v=v.replace(/(\d{5})(\d{1,3})/,'$1-$2');
   this.value=v;
-  if(v.replace('-','').length===8) buscarCep(v.replace('-',''));
+  if(v.replace('-','').length===8)buscarCep(v.replace('-',''));
 });
 
 async function buscarCep(cep){
   try{
     const r=await fetch('https://viacep.com.br/ws/'+cep+'/json/'),d=await r.json();
     if(!d.erro){
-      document.getElementById('rua').value=d.logradouro||'';
-      document.getElementById('bairro').value=d.bairro||'';
-      document.getElementById('cidade').value=(d.localidade||'')+(d.uf?' / '+d.uf:'');
+      document.getElementById('rua').value=(d.logradouro||'').toUpperCase();
+      document.getElementById('bairro').value=(d.bairro||'').toUpperCase();
+      document.getElementById('cidade').value=((d.localidade||'')+(d.uf?' / '+d.uf:'')).toUpperCase();
       document.getElementById('numero').focus();
     }
   }catch(e){}
@@ -414,7 +394,6 @@ async function buscarCep(cep){
 
 function timeToMin(t){if(!t)return null;const[h,m]=t.split(':').map(Number);return h*60+m;}
 function minToStr(m){if(m===null||m<0)return'—';return Math.floor(m/60)+'h '+String(m%60).padStart(2,'0')+'min';}
-
 function calcDia(dia){
   const en=timeToMin(document.getElementById(dia+'_en').value);
   const ii=timeToMin(document.getElementById(dia+'_ii').value);
@@ -428,7 +407,6 @@ function calcDia(dia){
   tot.style.color=mins>0?'var(--navy)':'var(--red)';
   return mins>0?mins:0;
 }
-
 function calcTotal(){
   let total=0;
   DIAS.forEach(d=>{
@@ -441,12 +419,10 @@ function calcTotal(){
   if(total>44*60){box.className='total-horas warn';aviso.style.display='block';}
   else{box.className='total-horas'+(total>0?' ok':'');aviso.style.display='none';}
 }
-
 function copiarDia(origem,destino){
   ['en','ii','ri','sa'].forEach(c=>{document.getElementById(destino+'_'+c).value=document.getElementById(origem+'_'+c).value;});
   calcDia(destino);calcTotal();
 }
-
 function handleAso(files){
   if(!files.length)return;
   const f=files[0];
@@ -455,10 +431,9 @@ function handleAso(files){
   document.getElementById('asoList').innerHTML=`<div class="upload-item" style="margin-top:8px"><span>📋</span><span class="ui-name">${f.name}</span><span class="ui-size">${(f.size/1024).toFixed(0)} KB</span><button class="upload-rm" onclick="asoFile=null;document.getElementById('asoList').innerHTML='';document.getElementById('asoInput').value=''">×</button></div>`;
 }
 function handleDropAso(e){e.preventDefault();document.getElementById('uploadAreaAso').classList.remove('drag');handleAso(e.dataTransfer.files);}
-
 function handleFiles(files){
   for(const f of files){
-    if(f.size>5*1024*1024){alert(f.name+': arquivo muito grande (máx 5MB)');continue;}
+    if(f.size>5*1024*1024){alert(f.name+': muito grande (máx 5MB)');continue;}
     if(uploadedFiles.find(x=>x.name===f.name&&x.size===f.size))continue;
     uploadedFiles.push(f);
   }
@@ -470,43 +445,33 @@ function renderUploads(){
   list.innerHTML=uploadedFiles.map((f,i)=>`<div class="upload-item"><span>📄</span><span class="ui-name">${f.name}</span><span class="ui-size">${(f.size/1024).toFixed(0)} KB</span><button class="upload-rm" onclick="removeFile(${i})">×</button></div>`).join('');
 }
 function removeFile(i){uploadedFiles.splice(i,1);renderUploads();}
-
 function toggleFilhos(el){const a=document.getElementById('filhosArea');a.style.display=el.value==='sim'?'block':'none';if(el.value==='sim'&&filhoN===0)addFilho();}
-function addFilho(){filhoN++;const id=filhoN,d=document.createElement('div');d.className='filho-card';d.id='filho_'+id;d.innerHTML=`<button class="filho-rm" type="button" onclick="rmFilho(${id})">×</button><div class="g g2" style="padding-right:28px"><div class="f s2" style="grid-column:span 2"><label>Nome</label><input type="text" id="f${id}_n" placeholder="Nome completo"></div><div class="f"><label>Data de nascimento</label><input type="date" id="f${id}_d"></div><div class="f"><label>CPF</label><input type="text" id="f${id}_c" placeholder="000.000.000-00" maxlength="14"></div></div>`;document.getElementById('filhosList').appendChild(d);}
+function addFilho(){filhoN++;const id=filhoN,d=document.createElement('div');d.className='filho-card';d.id='filho_'+id;d.innerHTML=`<button class="filho-rm" type="button" onclick="rmFilho(${id})">×</button><div class="g g2" style="padding-right:28px"><div class="f s2" style="grid-column:span 2"><label>Nome</label><input type="text" id="f${id}_n" placeholder="Nome completo"></div><div class="f"><label>Data de nascimento</label><input type="date" id="f${id}_d"></div><div class="f"><label>CPF</label><input type="text" id="f${id}_c" placeholder="000.000.000-00" maxlength="14" style="text-transform:none"></div></div>`;document.getElementById('filhosList').appendChild(d);}
 function rmFilho(id){const el=document.getElementById('filho_'+id);if(el)el.remove();}
-
 function v(id){return(document.getElementById(id)||{}).value||'';}
 function horarioStr(dia){const en=v(dia+'_en'),sa=v(dia+'_sa'),ii=v(dia+'_ii'),ri=v(dia+'_ri');if(!en||!sa)return'';return`${en} às ${sa}`+(ii&&ri?` | Int: ${ii}–${ri}`:'');}
-
 async function uploadArquivo(path,file){
-  try{
-    await fetch(`${URL_SB}/storage/v1/object/documentos-admissao/${path}`,{
-      method:'POST',
-      headers:{'apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Content-Type':file.type,'x-upsert':'true'},
-      body:file
-    });
-  }catch(e){console.warn('Upload falhou:',path);}
+  try{await fetch(`${URL_SB}/storage/v1/object/documentos-admissao/${path}`,{method:'POST',headers:{'apikey':KEY_SB,'Authorization':'Bearer '+KEY_SB,'Content-Type':file.type,'x-upsert':'true'},body:file});}
+  catch(e){console.warn('Upload falhou:',path);}
 }
 
 async function enviar(){
   const btn=document.getElementById('btnEnviar'),sp=document.getElementById('spinner'),bt=document.getElementById('btnTxt');
 
-  // MODO FUNCIONÁRIO — atualiza ficha existente
   if(modo==='funcionario'){
     const reqFun=['nome','cpf','mae','rua','numero','cidade','estCivil','raca'];
     if(!reqFun.every(i=>v(i).trim())){alert('Preencha todos os campos obrigatórios.');return;}
     btn.disabled=true;sp.style.display='block';bt.textContent='Enviando...';
     const filhos=[];
-    document.querySelectorAll('[id^=filho_]').forEach(el=>{const id=el.id.replace('filho_','');filhos.push({nome:v('f'+id+'_n'),nasc:v('f'+id+'_d'),cpf:v('f'+id+'_c')});});
+    document.querySelectorAll('[id^=filho_]').forEach(el=>{const id=el.id.replace('filho_','');filhos.push({nome:upper(v('f'+id+'_n')),nasc:v('f'+id+'_d'),cpf:v('f'+id+'_c')});});
     const data={
-      nome:v('nome'),cpf:v('cpf'),pis:v('pis')||null,
-      nome_mae:v('mae'),nome_pai:v('pai')||null,
-      cidade_natal:v('cidNatal')||null,
+      nome:upper(v('nome')),cpf:v('cpf'),pis:v('pis')||null,
+      nome_mae:upper(v('mae')),nome_pai:upper(v('pai'))||null,
+      cidade_natal:upper(v('cidNatal'))||null,
       estado_civil:v('estCivil'),raca_cor:v('raca'),
-      cep:v('cep')||null,rua:v('rua'),numero:v('numero'),
-      bairro:v('bairro')||null,complemento:v('comp')||null,cidade:v('cidade'),
-      filhos:filhos.length?JSON.stringify(filhos):null,
-      status:'novo'
+      cep:v('cep')||null,rua:upper(v('rua')),numero:v('numero'),
+      bairro:upper(v('bairro'))||null,complemento:upper(v('comp'))||null,cidade:upper(v('cidade')),
+      filhos:filhos.length?JSON.stringify(filhos):null,status:'novo'
     };
     try{
       const res=await fetch(`${URL_SB}/rest/v1/fichas_admissionais?id=eq.${fichaId}`,{
@@ -515,70 +480,43 @@ async function enviar(){
         body:JSON.stringify(data)
       });
       if(!res.ok){const e=await res.text();console.error('PATCH error:',e);throw new Error();}
-      for(const f of uploadedFiles) await uploadArquivo(`fichas/${fichaId}/${Date.now()}_${f.name}`,f);
+      for(const f of uploadedFiles)await uploadArquivo(`fichas/${fichaId}/${Date.now()}_${f.name}`,f);
       document.getElementById('formWrap').style.display='none';
       document.getElementById('successTit').textContent='Dados enviados com sucesso!';
       document.getElementById('successMsg').textContent='Seus dados pessoais foram recebidos pelo Departamento Pessoal da Pró Eficácia.';
       document.getElementById('successBox').style.display='block';
       window.scrollTo({top:0,behavior:'smooth'});
-    }catch(e){
-      btn.disabled=false;sp.style.display='none';bt.textContent='Enviar meus dados';
-      alert('Erro ao enviar. Tente novamente.');
-    }
+    }catch(e){btn.disabled=false;sp.style.display='none';bt.textContent='Enviar meus dados';alert('Erro ao enviar. Tente novamente.');}
     return;
   }
 
-  // MODO EMPRESA ou TUDO — cria nova ficha
   const reqEmp=['empresa','admissao','funcao','salario','contrato'];
   const vt=document.querySelector('input[name=vt]:checked');
   if(!reqEmp.every(i=>v(i).trim())||!vt){alert('Preencha todos os campos obrigatórios da contratação.');return;}
-
   const isTudo=modo==='tudo';
   if(isTudo){
     const reqFun=['nome','cpf','mae','rua','numero','cidade','estCivil','raca'];
     if(!reqFun.every(i=>v(i).trim())){alert('Preencha todos os campos obrigatórios do funcionário.');return;}
   }
-
   btn.disabled=true;sp.style.display='block';bt.textContent='Enviando...';
-
-  const horarios={};
-  DIAS.forEach(d=>{const s=horarioStr(d);if(s)horarios[d]=s;});
-
+  const horarios={};DIAS.forEach(d=>{const s=horarioStr(d);if(s)horarios[d]=s;});
   const filhos=[];
-  if(isTudo){
-    document.querySelectorAll('[id^=filho_]').forEach(el=>{const id=el.id.replace('filho_','');filhos.push({nome:v('f'+id+'_n'),nasc:v('f'+id+'_d'),cpf:v('f'+id+'_c')});});
-  }
-
-  // Data no formato correto YYYY-MM-DD (input date já retorna assim)
-  const admissaoVal = v('admissao'); // já vem como YYYY-MM-DD do input type=date
-
+  if(isTudo){document.querySelectorAll('[id^=filho_]').forEach(el=>{const id=el.id.replace('filho_','');filhos.push({nome:upper(v('f'+id+'_n')),nasc:v('f'+id+'_d'),cpf:v('f'+id+'_c')});});}
   const data={
-    empresa:v('empresa'),
-    admissao:admissaoVal||null,
-    funcao:v('funcao'),
-    salario:v('salario'),
-    contrato:v('contrato'),
-    vale_transporte:vt.value,
+    empresa:upper(v('empresa')),admissao:v('admissao')||null,
+    funcao:upper(v('funcao')),salario:v('salario'),contrato:v('contrato'),vale_transporte:vt.value,
     horario_seg_sex:[horarios.seg,horarios.ter,horarios.qua,horarios.qui,horarios.sex].filter(Boolean).join(' | ')||null,
     horario_sabado:horarios.sab||null,
-    nome:isTudo?v('nome'):null,
-    cpf:isTudo?v('cpf'):null,
-    pis:isTudo?(v('pis')||null):null,
-    nome_mae:isTudo?v('mae'):null,
-    nome_pai:isTudo?(v('pai')||null):null,
-    cidade_natal:isTudo?(v('cidNatal')||null):null,
-    estado_civil:isTudo?v('estCivil'):null,
-    raca_cor:isTudo?v('raca'):null,
-    cep:isTudo?(v('cep')||null):null,
-    rua:isTudo?v('rua'):null,
-    numero:isTudo?v('numero'):null,
-    bairro:isTudo?(v('bairro')||null):null,
-    complemento:isTudo?(v('comp')||null):null,
-    cidade:isTudo?v('cidade'):null,
+    nome:isTudo?upper(v('nome')):null,cpf:isTudo?v('cpf'):null,pis:isTudo?(v('pis')||null):null,
+    nome_mae:isTudo?upper(v('mae')):null,nome_pai:isTudo?(upper(v('pai'))||null):null,
+    cidade_natal:isTudo?(upper(v('cidNatal'))||null):null,
+    estado_civil:isTudo?v('estCivil'):null,raca_cor:isTudo?v('raca'):null,
+    cep:isTudo?(v('cep')||null):null,rua:isTudo?upper(v('rua')):null,numero:isTudo?v('numero'):null,
+    bairro:isTudo?(upper(v('bairro'))||null):null,complemento:isTudo?(upper(v('comp'))||null):null,
+    cidade:isTudo?upper(v('cidade')):null,
     filhos:isTudo&&filhos.length?JSON.stringify(filhos):null,
     status:isTudo?'novo':'aguardando_funcionario'
   };
-
   try{
     const res=await fetch(`${URL_SB}/rest/v1/fichas_admissionais`,{
       method:'POST',
@@ -588,34 +526,24 @@ async function enviar(){
     if(!res.ok){const e=await res.text();console.error('POST error:',e);throw new Error();}
     const result=await res.json();
     const newId=result[0]?.id;
-
-    if(newId && asoFile) await uploadArquivo(`fichas/${newId}/ASO_${Date.now()}_${asoFile.name}`,asoFile);
-    if(newId && isTudo) for(const f of uploadedFiles) await uploadArquivo(`fichas/${newId}/${Date.now()}_${f.name}`,f);
-
+    if(newId&&asoFile)await uploadArquivo(`fichas/${newId}/ASO_${Date.now()}_${asoFile.name}`,asoFile);
+    if(newId&&isTudo)for(const f of uploadedFiles)await uploadArquivo(`fichas/${newId}/${Date.now()}_${f.name}`,f);
     document.getElementById('formWrap').style.display='none';
     document.getElementById('successBox').style.display='block';
     window.scrollTo({top:0,behavior:'smooth'});
-
-    if(!isTudo && newId){
-      const empEnc=encodeURIComponent(v('empresa'));
+    if(!isTudo&&newId){
+      const empEnc=encodeURIComponent(upper(v('empresa')));
       const linkFunc=`${window.location.origin}/form.html?modo=funcionario&ficha=${newId}&empresa=${empEnc}`;
       document.getElementById('linkFuncUrl').textContent=linkFunc;
       document.getElementById('linkFuncBox').style.display='block';
       document.getElementById('successTit').textContent='Dados da contratação enviados!';
       document.getElementById('successMsg').textContent='Envie o link abaixo para o funcionário preencher os dados pessoais:';
     }
-  }catch(e){
-    btn.disabled=false;sp.style.display='none';bt.textContent='Enviar ficha admissional';
-    alert('Erro ao enviar. Verifique os dados e tente novamente.');
-  }
+  }catch(e){btn.disabled=false;sp.style.display='none';bt.textContent='Enviar ficha admissional';alert('Erro ao enviar. Verifique os dados e tente novamente.');}
 }
-
 function copiarLinkFunc(){
   const url=document.getElementById('linkFuncUrl').textContent;
-  navigator.clipboard.writeText(url).then(()=>{
-    const b=event.target;b.textContent='✓ Copiado!';
-    setTimeout(()=>b.textContent='📋 Copiar link do funcionário',2000);
-  });
+  navigator.clipboard.writeText(url).then(()=>{const b=event.target;b.textContent='✓ Copiado!';setTimeout(()=>b.textContent='📋 Copiar link do funcionário',2000);});
 }
 </script>
 </body>
