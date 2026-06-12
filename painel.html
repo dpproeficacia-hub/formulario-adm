@@ -29,35 +29,51 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .lerr{font-size:13px;color:var(--red);margin-top:8px;text-align:center;display:none}
 #app{display:none;min-height:100vh}
 .app-hd{background:var(--navy);position:sticky;top:0;z-index:100}
-.app-hd-in{max-width:1080px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.app-hd-in{max-width:1100px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between}
 .app-hd img{height:34px}
 .app-hd-r{display:flex;align-items:center;gap:14px}
 .app-hd-r span{font-size:13px;color:rgba(255,255,255,.55)}
 .out-btn{background:rgba(255,255,255,.1);border:none;color:#fff;font-size:13px;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif}
 .out-btn:hover{background:rgba(255,255,255,.2)}
-.app-wrap{max-width:1080px;margin:0 auto;padding:26px 24px 64px}
-.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:24px}
-@media(max-width:680px){.stats{grid-template-columns:1fr 1fr}}
-.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:15px 18px}
+.tabs{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:99}
+.tabs-in{max-width:1100px;margin:0 auto;padding:0 24px;display:flex}
+.tab-btn{padding:14px 20px;font-size:13px;font-weight:500;color:var(--muted);border:none;background:none;cursor:pointer;font-family:'Inter',sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--gold)}
+.tab-btn:hover{color:var(--navy)}
+.app-wrap{max-width:1100px;margin:0 auto;padding:24px 24px 64px}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:20px}
+@media(max-width:780px){.stats{grid-template-columns:1fr 1fr}}
+.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;cursor:pointer;transition:all .15s;user-select:none}
+.sc:hover{border-color:var(--gold)}
+.sc.active-filter{border-color:var(--navy);background:var(--navy)}
+.sc.active-filter .n,.sc.active-filter .l{color:#fff}
 .sc.gold{border-top:3px solid var(--gold)}
-.sc .n{font-size:28px;font-weight:600;color:var(--navy)}
-.sc .l{font-size:12px;color:var(--muted);margin-top:2px}
-.lg{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin-bottom:18px}
-.lg-tit{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--navy);margin-bottom:13px}
-.lg-row{display:flex;gap:10px;align-items:flex-end}
-.lg-f{flex:1;display:flex;flex-direction:column;gap:4px}
-.lg-f label{font-size:12px;color:var(--muted);font-weight:500}
-.lg-f input{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);font-size:14px;font-family:'Inter',sans-serif;color:var(--text)}
-.lg-f input:focus{outline:none;border-color:var(--gold);background:#fff}
-.lg-btn{height:40px;padding:0 20px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
-.lg-btn:hover{background:var(--navy2)}
-.lg-result{display:none;margin-top:12px;background:var(--off);border:1px solid var(--border);border-radius:7px;padding:11px 14px;align-items:center;gap:10px}
-.lg-result.show{display:flex}
-.lg-url{flex:1;font-size:13px;color:var(--navy);word-break:break-all}
-.cp-btn{padding:6px 14px;background:var(--goldpale);border:1px solid var(--gold);color:var(--navy);border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif}
-.cp-btn:hover{background:var(--gold);color:#fff}
+.sc .n{font-size:26px;font-weight:600;color:var(--navy)}
+.sc .l{font-size:11px;color:var(--muted);margin-top:2px}
+.aviso90{background:#FFF3E0;border:1px solid #FFB74D;border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#E65100;display:flex;align-items:center;gap:8px}
+.emp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+.emp-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.emp-card-top{display:flex;align-items:center;justify-content:space-between}
+.emp-name{font-size:14px;font-weight:600;color:var(--navy)}
+.emp-del{background:none;border:none;cursor:pointer;color:#ccc;font-size:18px;padding:0}
+.emp-del:hover{color:var(--red)}
+.emp-url{font-size:11px;color:var(--muted);word-break:break-all;background:var(--off);border-radius:5px;padding:6px 8px}
+.emp-actions{display:flex;gap:8px}
+.emp-copy{flex:1;height:34px;background:var(--goldpale);border:1px solid var(--gold);color:var(--navy);border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif}
+.emp-copy:hover{background:var(--gold);color:#fff}
+.emp-open{height:34px;padding:0 14px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif}
+.emp-open:hover{background:var(--navy2)}
+.add-emp-box{background:#fff;border:2px dashed var(--border);border-radius:10px;padding:18px;display:flex;gap:10px;align-items:flex-end}
+.add-emp-box .lf2{flex:1;display:flex;flex-direction:column;gap:4px}
+.add-emp-box label{font-size:12px;color:var(--muted);font-weight:500}
+.add-emp-box input{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);font-size:14px;font-family:'Inter',sans-serif;color:var(--text)}
+.add-emp-box input:focus{outline:none;border-color:var(--gold);background:#fff}
+.add-emp-btn{height:40px;padding:0 20px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.add-emp-btn:hover{background:var(--navy2)}
 .tw{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
-.tt{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.tt{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px}
 .tt h3{font-size:14px;font-weight:600;color:var(--navy)}
 .srch{height:36px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);font-size:13px;font-family:'Inter',sans-serif;color:var(--text);width:210px}
 .srch:focus{outline:none;border-color:var(--gold)}
@@ -70,15 +86,20 @@ tbody td{padding:11px 16px;font-size:13px}
 tbody td.m{color:var(--muted)}
 .bs{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
 .b-novo{background:#E8F5E9;color:#2E7D32}
-.b-aguard{background:#FFF3E0;color:#E65100}
+.b-aguarf{background:#FCE4EC;color:#880E4F}
 .b-and{background:#FFF8E1;color:#F57F17}
 .b-conc{background:#E3F2FD;color:#1565C0}
 .empty{text-align:center;padding:48px;color:var(--muted);font-size:14px}
 .ov{display:none;position:fixed;inset:0;background:rgba(14,27,61,.6);z-index:200;align-items:center;justify-content:center;padding:20px}
 .ov.open{display:flex}
-.modal{background:#fff;border-radius:12px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto}
-.mhd{background:var(--navy);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0}
+.modal{background:#fff;border-radius:12px;width:100%;max-width:700px;max-height:92vh;overflow-y:auto}
+.mhd{background:var(--navy);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .mhd h2{font-size:14px;font-weight:600;color:#fff}
+.mhd-btns{display:flex;gap:8px;align-items:center}
+.print-btn{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:12px;padding:5px 12px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif}
+.print-btn:hover{background:rgba(255,255,255,.25)}
+.del-btn{background:rgba(192,57,43,.7);border:none;color:#fff;font-size:12px;padding:5px 12px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif}
+.del-btn:hover{background:var(--red)}
 .mcl{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;width:30px;height:30px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .mcl:hover{background:rgba(255,255,255,.25)}
 .mbody{padding:22px}
@@ -89,8 +110,8 @@ tbody td.m{color:var(--muted)}
 .mf .mv{font-size:14px;color:var(--text);font-weight:500}
 .st-sel{height:34px;padding:0 10px;border:1.5px solid var(--border);border-radius:6px;background:var(--off);font-size:13px;font-family:'Inter',sans-serif;color:var(--text)}
 .st-sel:focus{outline:none;border-color:var(--gold)}
-.mact{display:flex;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
-.msave{flex:1;height:40px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif}
+.mact{display:flex;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);flex-wrap:wrap}
+.msave{flex:1;height:40px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;min-width:120px}
 .msave:hover{background:var(--navy2)}
 .mclose{height:40px;padding:0 16px;background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:7px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif}
 .mclose:hover{background:var(--off)}
@@ -99,6 +120,15 @@ tbody td.m{color:var(--muted)}
 .doc-item a{flex:1;color:var(--navy);font-weight:500;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .doc-item a:hover{text-decoration:underline}
 .doc-empty{font-size:13px;color:var(--muted);font-style:italic}
+.link-func-copy{display:flex;align-items:center;gap:8px;background:var(--goldpale);border:1px solid var(--gold);border-radius:7px;padding:10px 12px;margin-top:6px}
+.link-func-copy span{flex:1;font-size:12px;color:var(--navy);word-break:break-all}
+.link-func-copy button{background:var(--navy);color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:11px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+@media print{
+  #login,#app .app-hd,.tabs,.mhd-btns,.mact{display:none!important}
+  .modal{box-shadow:none;border-radius:0;max-height:none;overflow:visible}
+  .ov{display:block!important;position:static!important;background:none!important;padding:0}
+  body{background:#fff}
+}
 </style>
 </head>
 <body>
@@ -118,190 +148,172 @@ tbody td.m{color:var(--muted)}
     </div>
   </div>
 </div>
-
 <div id="app">
   <div class="app-hd">
     <div class="app-hd-in">
       <img src="logo.png" alt="Pró Eficácia">
-      <div class="app-hd-r">
-        <span id="uEmail"></span>
-        <button class="out-btn" onclick="logout()">Sair</button>
-      </div>
+      <div class="app-hd-r"><span id="uEmail"></span><button class="out-btn" onclick="logout()">Sair</button></div>
     </div>
     <div class="gold-line"></div>
   </div>
+  <div class="tabs">
+    <div class="tabs-in">
+      <button class="tab-btn active" onclick="setTab('fichas',this)">📋 Fichas</button>
+      <button class="tab-btn" onclick="setTab('empresas',this)">🏢 Empresas</button>
+    </div>
+  </div>
   <div class="app-wrap">
-    <div class="stats">
-      <div class="sc gold"><div class="n" id="sTot">—</div><div class="l">Total de fichas</div></div>
-      <div class="sc"><div class="n" id="sNov">—</div><div class="l">Novas</div></div>
-      <div class="sc"><div class="n" id="sAguard">—</div><div class="l">Aguard. empresa</div></div>
-      <div class="sc"><div class="n" id="sAnd">—</div><div class="l">Em andamento</div></div>
-      <div class="sc"><div class="n" id="sCon">—</div><div class="l">Concluídas</div></div>
+    <div class="tab-pane active" id="tab-fichas">
+      <div class="aviso90">⏰ <span>Registros são <strong>apagados automaticamente após 90 dias</strong>. Salve PDF das fichas importantes antes do prazo.</span></div>
+      <div class="stats">
+        <div class="sc gold active-filter" onclick="setFiltro('todos',this)" id="fc-todos"><div class="n" id="sTot">—</div><div class="l">Total de fichas</div></div>
+        <div class="sc" onclick="setFiltro('novo',this)" id="fc-novo"><div class="n" id="sNov">—</div><div class="l">Novas</div></div>
+        <div class="sc" onclick="setFiltro('aguardando_funcionario',this)" id="fc-aguarf"><div class="n" id="sAguarF">—</div><div class="l">Aguard. funcionário</div></div>
+        <div class="sc" onclick="setFiltro('andamento',this)" id="fc-andamento"><div class="n" id="sAnd">—</div><div class="l">Em andamento</div></div>
+        <div class="sc" onclick="setFiltro('concluido',this)" id="fc-concluido"><div class="n" id="sCon">—</div><div class="l">Concluídas</div></div>
+      </div>
+      <div class="tw">
+        <div class="tt">
+          <h3 id="tblTitulo">Todas as fichas</h3>
+          <input type="text" class="srch" id="srch" placeholder="Buscar nome ou empresa..." oninput="render()">
+        </div>
+        <div id="tbl"><div class="empty">Carregando...</div></div>
+      </div>
     </div>
-    <div class="lg">
-      <div class="lg-tit">Gerar link de admissão</div>
-      <div class="lg-row">
-        <div class="lg-f"><label>Nome da empresa</label><input type="text" id="lgEmp" placeholder="Ex: Padaria São João"></div>
-        <button class="lg-btn" onclick="gerarLink()">Gerar link</button>
+    <div class="tab-pane" id="tab-empresas">
+      <div class="add-emp-box">
+        <div class="lf2"><label>Nome da empresa</label><input type="text" id="novaEmp" placeholder="Ex: Padaria São João" onkeydown="if(event.key==='Enter')addEmpresa()"></div>
+        <button class="add-emp-btn" onclick="addEmpresa()">+ Cadastrar empresa</button>
       </div>
-      <div class="lg-result" id="lgResult">
-        <span class="lg-url" id="lgUrl"></span>
-        <button class="cp-btn" onclick="copiar()">Copiar</button>
-      </div>
-    </div>
-    <div class="tw">
-      <div class="tt">
-        <h3>Fichas recebidas</h3>
-        <input type="text" class="srch" id="srch" placeholder="Buscar nome ou empresa..." oninput="render()">
-      </div>
-      <div id="tbl"><div class="empty">Carregando...</div></div>
+      <div style="height:16px"></div>
+      <div class="emp-grid" id="empGrid"><div class="empty">Nenhuma empresa cadastrada ainda.</div></div>
     </div>
   </div>
 </div>
-
 <div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="mhd"><h2 id="mTit">Ficha admissional</h2><button class="mcl" onclick="closeModal()">×</button></div>
+  <div class="modal" id="modalContent">
+    <div class="mhd">
+      <h2 id="mTit">Ficha admissional</h2>
+      <div class="mhd-btns">
+        <button class="print-btn" onclick="imprimirFicha()">🖨️ Imprimir PDF</button>
+        <button class="del-btn" onclick="excluirFicha()">🗑️ Excluir</button>
+        <button class="mcl" onclick="closeModal()">×</button>
+      </div>
+    </div>
     <div class="gold-line"></div>
     <div class="mbody" id="mBody"></div>
   </div>
 </div>
-
 <script>
 const SB_URL='https://rgelyzzuexghmhpualhm.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZWx5enp1ZXhnaG1ocHVhbGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTU4MDgsImV4cCI6MjA5Njc3MTgwOH0.vutgtaQ12L4-8GQgdCwdrJjOlG9a0KbSgGnEntXL8eM';
 const FORM_URL=window.location.origin+'/form.html';
-let token=null, fichas=[], atual=null;
+let token=null,fichas=[],atual=null,filtroAtivo='todos',empresas=[];
 
 async function login(){
-  const email=document.getElementById('lemail').value.trim();
-  const senha=document.getElementById('lsenha').value;
+  const email=document.getElementById('lemail').value.trim(),senha=document.getElementById('lsenha').value;
   document.getElementById('lerr').style.display='none';
   try{
-    const r=await fetch(SB_URL+'/auth/v1/token?grant_type=password',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY},
-      body:JSON.stringify({email,password:senha})
-    });
+    const r=await fetch(SB_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY},body:JSON.stringify({email,password:senha})});
     const d=await r.json();
     if(!r.ok||!d.access_token)throw new Error();
     token=d.access_token;
     document.getElementById('uEmail').textContent=email;
     document.getElementById('login').style.display='none';
     document.getElementById('app').style.display='block';
-    carregar();
+    carregar();carregarEmpresas();
   }catch(e){document.getElementById('lerr').style.display='block';}
 }
-
-function logout(){
-  token=null;fichas=[];
-  document.getElementById('app').style.display='none';
-  document.getElementById('login').style.display='flex';
+function logout(){token=null;fichas=[];document.getElementById('app').style.display='none';document.getElementById('login').style.display='flex';}
+function setTab(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');document.getElementById('tab-'+tab).classList.add('active');
 }
-
 async function carregar(){
   try{
-    const r=await fetch(SB_URL+'/rest/v1/fichas_admissionais?select=*&order=created_at.desc',{
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}
-    });
-    fichas=await r.json();
-    stats();render();
+    const r=await fetch(SB_URL+'/rest/v1/fichas_admissionais?select=*&order=created_at.desc',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}});
+    fichas=await r.json();stats();render();
   }catch(e){document.getElementById('tbl').innerHTML='<div class="empty">Erro ao carregar fichas.</div>';}
 }
-
 function stats(){
   document.getElementById('sTot').textContent=fichas.length;
   document.getElementById('sNov').textContent=fichas.filter(f=>f.status==='novo').length;
-  document.getElementById('sAguard').textContent=fichas.filter(f=>f.status==='aguardando_empresa').length;
+  document.getElementById('sAguarF').textContent=fichas.filter(f=>f.status==='aguardando_funcionario').length;
   document.getElementById('sAnd').textContent=fichas.filter(f=>f.status==='andamento').length;
   document.getElementById('sCon').textContent=fichas.filter(f=>f.status==='concluido').length;
 }
-
+function setFiltro(filtro,el){
+  filtroAtivo=filtro;
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('active-filter'));
+  el.classList.add('active-filter');
+  const titulos={todos:'Todas as fichas',novo:'Fichas novas',aguardando_funcionario:'Aguardando funcionário',andamento:'Em andamento',concluido:'Concluídas'};
+  document.getElementById('tblTitulo').textContent=titulos[filtro]||'Fichas';
+  render();
+}
 function render(){
   const q=document.getElementById('srch').value.toLowerCase();
-  const list=fichas.filter(f=>(f.nome||'').toLowerCase().includes(q)||(f.empresa||'').toLowerCase().includes(q));
+  let list=fichas.filter(f=>(f.nome||'').toLowerCase().includes(q)||(f.empresa||'').toLowerCase().includes(q));
+  if(filtroAtivo!=='todos')list=list.filter(f=>(f.status||'novo')===filtroAtivo);
   if(!list.length){document.getElementById('tbl').innerHTML='<div class="empty">Nenhuma ficha encontrada.</div>';return;}
-  const sl={novo:'Novo',aguardando_empresa:'Aguard. empresa',andamento:'Em andamento',concluido:'Concluído'};
-  const sc={novo:'b-novo',aguardando_empresa:'b-aguard',andamento:'b-and',concluido:'b-conc'};
+  const sl={novo:'Novo',aguardando_funcionario:'Aguard. funcionário',andamento:'Em andamento',concluido:'Concluído'};
+  const sc={novo:'b-novo',aguardando_funcionario:'b-aguarf',andamento:'b-and',concluido:'b-conc'};
   let h=`<table><thead><tr><th>Nome</th><th>Empresa</th><th>Função</th><th>Admissão</th><th>Status</th></tr></thead><tbody>`;
   list.forEach(f=>{
     const dt=f.admissao?new Date(f.admissao+'T12:00:00').toLocaleDateString('pt-BR'):'—';
     const st=f.status||'novo';
-    h+=`<tr onclick="openModal(${f.id})">
-      <td><strong>${f.nome||'—'}</strong></td>
-      <td class="m">${f.empresa||'—'}</td>
-      <td class="m">${f.funcao||'—'}</td>
-      <td class="m">${dt}</td>
-      <td><span class="bs ${sc[st]||'b-novo'}">${sl[st]||st}</span></td>
-    </tr>`;
+    h+=`<tr onclick="openModal(${f.id})"><td><strong>${f.nome||'—'}</strong></td><td class="m">${f.empresa||'—'}</td><td class="m">${f.funcao||'—'}</td><td class="m">${dt}</td><td><span class="bs ${sc[st]||'b-novo'}">${sl[st]||st}</span></td></tr>`;
   });
   h+='</tbody></table>';
   document.getElementById('tbl').innerHTML=h;
 }
-
-function gerarLink(){
-  const emp=document.getElementById('lgEmp').value.trim();
-  if(!emp){document.getElementById('lgEmp').focus();return;}
-  document.getElementById('lgUrl').textContent=FORM_URL+'?empresa='+encodeURIComponent(emp);
-  document.getElementById('lgResult').classList.add('show');
+function carregarEmpresas(){
+  const salvas=localStorage.getItem('proeficacia_empresas');
+  empresas=salvas?JSON.parse(salvas):[];renderEmpresas();
 }
-
-function copiar(){
-  navigator.clipboard.writeText(document.getElementById('lgUrl').textContent).then(()=>{
-    const b=document.querySelector('.cp-btn');b.textContent='Copiado!';
-    setTimeout(()=>b.textContent='Copiar',2000);
-  });
+function salvarEmpresas(){localStorage.setItem('proeficacia_empresas',JSON.stringify(empresas));}
+function addEmpresa(){
+  const inp=document.getElementById('novaEmp'),nome=inp.value.trim();
+  if(!nome)return;
+  if(empresas.find(e=>e.nome.toLowerCase()===nome.toLowerCase())){alert('Empresa já cadastrada.');return;}
+  empresas.push({nome,id:Date.now()});salvarEmpresas();renderEmpresas();inp.value='';
 }
-
+function removerEmpresa(id){
+  if(!confirm('Remover esta empresa?'))return;
+  empresas=empresas.filter(e=>e.id!==id);salvarEmpresas();renderEmpresas();
+}
+function renderEmpresas(){
+  const grid=document.getElementById('empGrid');
+  if(!empresas.length){grid.innerHTML='<div class="empty">Nenhuma empresa cadastrada ainda.</div>';return;}
+  grid.innerHTML=empresas.map(e=>{
+    const url=`${FORM_URL}?empresa=${encodeURIComponent(e.nome)}`;
+    return`<div class="emp-card"><div class="emp-card-top"><span class="emp-name">${e.nome}</span><button class="emp-del" onclick="removerEmpresa(${e.id})">×</button></div><div class="emp-url">${url}</div><div class="emp-actions"><button class="emp-copy" onclick="copiarLinkEmp('${url}',this)">📋 Copiar link</button><button class="emp-open" onclick="window.open('${url}','_blank')">Abrir</button></div></div>`;
+  }).join('');
+}
+function copiarLinkEmp(url,btn){navigator.clipboard.writeText(url).then(()=>{btn.textContent='✓ Copiado!';setTimeout(()=>btn.textContent='📋 Copiar link',2000);});}
 function formatarHorarios(f){
   const raw=(f.horario_seg_sex||'').trim();
   if(!raw)return'Não informado';
-  const partes=raw.split(' | ');
-  if(partes.length===0)return'Não informado';
-  // Agrupa dias com mesmo horário
-  const dias=['Seg','Ter','Qua','Qui','Sex'];
-  if(partes.length===1){
-    return`Seg–Sex: ${partes[0]}`;
-  }
-  // Verifica se todos iguais
+  const partes=raw.split(' | '),dias=['Seg','Ter','Qua','Qui','Sex'];
   const uniq=[...new Set(partes)];
   if(uniq.length===1)return`Seg–Sex: ${uniq[0]}`;
-  // Monta linha por linha agrupando consecutivos
-  let result=[], i=0;
-  while(i<partes.length){
-    let j=i;
-    while(j<partes.length-1&&partes[j]===partes[j+1])j++;
-    if(i===j) result.push(`${dias[i]}: ${partes[i]}`);
-    else result.push(`${dias[i]}–${dias[j]}: ${partes[i]}`);
-    i=j+1;
-  }
+  let result=[],i=0;
+  while(i<partes.length){let j=i;while(j<partes.length-1&&partes[j]===partes[j+1])j++;result.push(i===j?`${dias[i]}: ${partes[i]}`:`${dias[i]}–${dias[j]}: ${partes[i]}`);i=j+1;}
   return result.join('<br>');
 }
-
 async function listarDocumentos(fichaId){
   try{
-    const r=await fetch(`${SB_URL}/storage/v1/object/list/documentos-admissao`,{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json'},
-      body:JSON.stringify({prefix:`fichas/${fichaId}/`,limit:50})
-    });
-    if(!r.ok)return[];
-    const data=await r.json();
-    return data||[];
+    const r=await fetch(`${SB_URL}/storage/v1/object/list/documentos-admissao`,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({prefix:`fichas/${fichaId}/`,limit:50})});
+    return r.ok?(await r.json()||[]):[];
   }catch(e){return[];}
 }
-
 async function openModal(id){
-  const f=fichas.find(x=>x.id===id);
-  if(!f)return;
-  atual=f;
+  const f=fichas.find(x=>x.id===id);if(!f)return;atual=f;
   document.getElementById('mTit').textContent=f.nome||'Ficha admissional';
-
-  let filhos;
-  try{filhos=JSON.parse(f.filhos||'[]');}catch(e){filhos=[];}
+  let filhos;try{filhos=JSON.parse(f.filhos||'[]');}catch(e){filhos=[];}
   const fh=filhos.length?filhos.map(c=>`<div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)">${c.nome||'—'} | Nasc: ${c.nasc||'—'} | CPF: ${c.cpf||'—'}</div>`).join(''):'<span style="color:var(--muted);font-size:13px">Nenhum</span>';
   const dt=f.admissao?new Date(f.admissao+'T12:00:00').toLocaleDateString('pt-BR'):'—';
-
+  const linkFunc=f.status==='aguardando_funcionario'?`${FORM_URL}?modo=funcionario&ficha=${f.id}&empresa=${encodeURIComponent(f.empresa||'')}`:null;
   document.getElementById('mBody').innerHTML=`
     <div class="ms"><div class="ms-tit">Empresa & admissão</div><div class="mg">
       <div class="mf"><div class="ml">Empresa</div><div class="mv">${f.empresa||'—'}</div></div>
@@ -313,6 +325,7 @@ async function openModal(id){
       <div class="mf" style="grid-column:span 2"><div class="ml">Horário Seg–Sex</div><div class="mv" style="font-size:13px">${formatarHorarios(f)}</div></div>
       <div class="mf" style="grid-column:span 2"><div class="ml">Horário Sábado</div><div class="mv">${f.horario_sabado||'Não informado'}</div></div>
     </div></div>
+    ${linkFunc?`<div class="ms"><div class="ms-tit">⏳ Aguardando funcionário</div><div style="font-size:13px;color:var(--muted);margin-bottom:6px">Envie o link abaixo para o funcionário completar os dados pessoais:</div><div class="link-func-copy"><span>${linkFunc}</span><button onclick="navigator.clipboard.writeText('${linkFunc}').then(()=>{this.textContent='✓ Copiado!';setTimeout(()=>this.textContent='Copiar',2000)})">Copiar</button></div></div>`:''}
     <div class="ms"><div class="ms-tit">Dados pessoais</div><div class="mg">
       <div class="mf" style="grid-column:span 2"><div class="ml">Nome completo</div><div class="mv">${f.nome||'—'}</div></div>
       <div class="mf"><div class="ml">CPF</div><div class="mv">${f.cpf||'—'}</div></div>
@@ -332,13 +345,13 @@ async function openModal(id){
       <div class="mf" style="grid-column:span 2"><div class="ml">Cidade / UF</div><div class="mv">${f.cidade||'—'}</div></div>
     </div></div>
     <div class="ms"><div class="ms-tit">Filhos</div>${fh}</div>
-    <div class="ms"><div class="ms-tit">Documentos</div><div class="doc-list" id="docList"><span class="doc-empty">Carregando...</span></div></div>
+    <div class="ms"><div class="ms-tit">Documentos & ASO</div><div class="doc-list" id="docList"><span class="doc-empty">Carregando...</span></div></div>
     <div class="mact">
       <div style="display:flex;align-items:center;gap:8px;flex:1">
         <span style="font-size:12px;color:var(--muted)">Status:</span>
         <select class="st-sel" id="mStatus">
           <option value="novo" ${(f.status||'novo')==='novo'?'selected':''}>Novo</option>
-          <option value="aguardando_empresa" ${f.status==='aguardando_empresa'?'selected':''}>Aguard. empresa</option>
+          <option value="aguardando_funcionario" ${f.status==='aguardando_funcionario'?'selected':''}>Aguard. funcionário</option>
           <option value="andamento" ${f.status==='andamento'?'selected':''}>Em andamento</option>
           <option value="concluido" ${f.status==='concluido'?'selected':''}>Concluído</option>
         </select>
@@ -346,34 +359,33 @@ async function openModal(id){
       <button class="mclose" onclick="closeModal()">Fechar</button>
       <button class="msave" onclick="salvar()">Salvar status</button>
     </div>`;
-
   document.getElementById('ov').classList.add('open');
-
-  // Carrega documentos em background
   listarDocumentos(f.id).then(docs=>{
-    const el=document.getElementById('docList');
-    if(!el)return;
+    const el=document.getElementById('docList');if(!el)return;
     if(!docs.length){el.innerHTML='<span class="doc-empty">Nenhum documento enviado</span>';return;}
     el.innerHTML=docs.map(d=>{
       const url=`${SB_URL}/storage/v1/object/documentos-admissao/fichas/${f.id}/${d.name}`;
-      return`<div class="doc-item"><span>📄</span><a href="${url}" target="_blank">${d.name}</a></div>`;
+      const isAso=d.name.startsWith('ASO_');
+      return`<div class="doc-item">${isAso?'📋':'📄'}<a href="${url}" target="_blank">${isAso?'[ASO] ':''} ${d.name.replace(/^ASO_\d+_/,'')}</a></div>`;
     }).join('');
   });
 }
-
 function closeModal(){document.getElementById('ov').classList.remove('open');atual=null;}
-
+function imprimirFicha(){window.print();}
+async function excluirFicha(){
+  if(!atual)return;
+  if(!confirm(`Excluir a ficha de "${atual.nome||atual.empresa||'este registro'}"? Esta ação não pode ser desfeita.`))return;
+  try{
+    await fetch(SB_URL+'/rest/v1/fichas_admissionais?id=eq.'+atual.id,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}});
+    fichas=fichas.filter(f=>f.id!==atual.id);stats();render();closeModal();
+  }catch(e){alert('Erro ao excluir. Tente novamente.');}
+}
 async function salvar(){
   if(!atual)return;
   const status=document.getElementById('mStatus').value;
   try{
-    await fetch(SB_URL+'/rest/v1/fichas_admissionais?id=eq.'+atual.id,{
-      method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+token,'Prefer':'return=minimal'},
-      body:JSON.stringify({status})
-    });
-    const i=fichas.findIndex(f=>f.id===atual.id);
-    if(i!==-1)fichas[i].status=status;
+    await fetch(SB_URL+'/rest/v1/fichas_admissionais?id=eq.'+atual.id,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+token,'Prefer':'return=minimal'},body:JSON.stringify({status})});
+    const i=fichas.findIndex(f=>f.id===atual.id);if(i!==-1)fichas[i].status=status;
     stats();render();closeModal();
   }catch(e){alert('Erro ao salvar status.');}
 }
