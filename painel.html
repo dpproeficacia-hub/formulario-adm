@@ -65,10 +65,10 @@ body{background:var(--off);font-family:'Inter',sans-serif;color:var(--text);font
 .emp-copy:hover{background:var(--gold);color:#fff}
 .emp-open{height:34px;padding:0 14px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif}
 .emp-open:hover{background:var(--navy2)}
-.add-emp-box{background:#fff;border:2px dashed var(--border);border-radius:10px;padding:18px;display:flex;gap:10px;align-items:flex-end}
+.add-emp-box{background:#fff;border:2px dashed var(--border);border-radius:10px;padding:18px;display:flex;gap:10px;align-items:flex-end;margin-bottom:16px}
 .add-emp-box .lf2{flex:1;display:flex;flex-direction:column;gap:4px}
 .add-emp-box label{font-size:12px;color:var(--muted);font-weight:500}
-.add-emp-box input{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);font-size:14px;font-family:'Inter',sans-serif;color:var(--text)}
+.add-emp-box input{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--off);font-size:14px;font-family:'Inter',sans-serif;color:var(--text);text-transform:uppercase}
 .add-emp-box input:focus{outline:none;border-color:var(--gold);background:#fff}
 .add-emp-btn{height:40px;padding:0 20px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
 .add-emp-btn:hover{background:var(--navy2)}
@@ -123,15 +123,24 @@ tbody td.m{color:var(--muted)}
 .link-func-copy{display:flex;align-items:center;gap:8px;background:var(--goldpale);border:1px solid var(--gold);border-radius:7px;padding:10px 12px;margin-top:6px}
 .link-func-copy span{flex:1;font-size:12px;color:var(--navy);word-break:break-all}
 .link-func-copy button{background:var(--navy);color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:11px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+/* PRINT — imprime só o conteúdo do modal */
 @media print{
-  #login,#app .app-hd,.tabs,.mhd-btns,.mact{display:none!important}
-  .modal{box-shadow:none;border-radius:0;max-height:none;overflow:visible}
-  .ov{display:block!important;position:static!important;background:none!important;padding:0}
-  body{background:#fff}
+  body > *{display:none!important}
+  #printArea{display:block!important;position:fixed;inset:0;background:#fff;padding:24px;font-family:'Inter',sans-serif;font-size:13px;color:#000}
+  #printArea .ms-tit{color:#B8975A;border-bottom:1px solid #ccc;padding-bottom:4px;margin-bottom:8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+  #printArea .mg{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-bottom:4px}
+  #printArea .ml{font-size:10px;color:#666;margin-bottom:1px}
+  #printArea .mv{font-size:13px;font-weight:600}
+  #printArea h1{font-size:16px;color:#0E1B3D;margin-bottom:16px;border-bottom:2px solid #B8975A;padding-bottom:8px}
 }
+#printArea{display:none}
 </style>
 </head>
 <body>
+
+<!-- ÁREA DE IMPRESSÃO OCULTA -->
+<div id="printArea"></div>
+
 <div id="login">
   <div class="lcard">
     <div class="ltop">
@@ -148,6 +157,7 @@ tbody td.m{color:var(--muted)}
     </div>
   </div>
 </div>
+
 <div id="app">
   <div class="app-hd">
     <div class="app-hd-in">
@@ -163,6 +173,8 @@ tbody td.m{color:var(--muted)}
     </div>
   </div>
   <div class="app-wrap">
+
+    <!-- ABA FICHAS -->
     <div class="tab-pane active" id="tab-fichas">
       <div class="aviso90">⏰ <span>Registros são <strong>apagados automaticamente após 90 dias</strong>. Salve PDF das fichas importantes antes do prazo.</span></div>
       <div class="stats">
@@ -180,18 +192,22 @@ tbody td.m{color:var(--muted)}
         <div id="tbl"><div class="empty">Carregando...</div></div>
       </div>
     </div>
+
+    <!-- ABA EMPRESAS -->
     <div class="tab-pane" id="tab-empresas">
       <div class="add-emp-box">
-        <div class="lf2"><label>Nome da empresa</label><input type="text" id="novaEmp" placeholder="Ex: Padaria São João" onkeydown="if(event.key==='Enter')addEmpresa()"></div>
+        <div class="lf2"><label>Nome da empresa</label><input type="text" id="novaEmp" placeholder="Ex: PADARIA SÃO JOÃO" onkeydown="if(event.key==='Enter')addEmpresa()"></div>
         <button class="add-emp-btn" onclick="addEmpresa()">+ Cadastrar empresa</button>
       </div>
-      <div style="height:16px"></div>
-      <div class="emp-grid" id="empGrid"><div class="empty">Nenhuma empresa cadastrada ainda.</div></div>
+      <div class="emp-grid" id="empGrid"><div class="empty">Carregando empresas...</div></div>
     </div>
+
   </div>
 </div>
+
+<!-- MODAL FICHA -->
 <div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
-  <div class="modal" id="modalContent">
+  <div class="modal">
     <div class="mhd">
       <h2 id="mTit">Ficha admissional</h2>
       <div class="mhd-btns">
@@ -204,38 +220,52 @@ tbody td.m{color:var(--muted)}
     <div class="mbody" id="mBody"></div>
   </div>
 </div>
+
 <script>
 const SB_URL='https://rgelyzzuexghmhpualhm.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZWx5enp1ZXhnaG1ocHVhbGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTU4MDgsImV4cCI6MjA5Njc3MTgwOH0.vutgtaQ12L4-8GQgdCwdrJjOlG9a0KbSgGnEntXL8eM';
 const FORM_URL=window.location.origin+'/form.html';
-let token=null,fichas=[],atual=null,filtroAtivo='todos',empresas=[];
+let token=null, fichas=[], atual=null, filtroAtivo='todos';
 
 async function login(){
-  const email=document.getElementById('lemail').value.trim(),senha=document.getElementById('lsenha').value;
+  const email=document.getElementById('lemail').value.trim();
+  const senha=document.getElementById('lsenha').value;
   document.getElementById('lerr').style.display='none';
   try{
-    const r=await fetch(SB_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY},body:JSON.stringify({email,password:senha})});
+    const r=await fetch(SB_URL+'/auth/v1/token?grant_type=password',{
+      method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY},
+      body:JSON.stringify({email,password:senha})
+    });
     const d=await r.json();
     if(!r.ok||!d.access_token)throw new Error();
     token=d.access_token;
     document.getElementById('uEmail').textContent=email;
     document.getElementById('login').style.display='none';
     document.getElementById('app').style.display='block';
-    carregar();carregarEmpresas();
+    carregar();
+    carregarEmpresas();
   }catch(e){document.getElementById('lerr').style.display='block';}
 }
+
 function logout(){token=null;fichas=[];document.getElementById('app').style.display='none';document.getElementById('login').style.display='flex';}
+
 function setTab(tab,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
 }
+
 async function carregar(){
   try{
-    const r=await fetch(SB_URL+'/rest/v1/fichas_admissionais?select=*&order=created_at.desc',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}});
-    fichas=await r.json();stats();render();
+    const r=await fetch(SB_URL+'/rest/v1/fichas_admissionais?select=*&order=created_at.desc',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}
+    });
+    fichas=await r.json();
+    stats();render();
   }catch(e){document.getElementById('tbl').innerHTML='<div class="empty">Erro ao carregar fichas.</div>';}
 }
+
 function stats(){
   document.getElementById('sTot').textContent=fichas.length;
   document.getElementById('sNov').textContent=fichas.filter(f=>f.status==='novo').length;
@@ -243,6 +273,7 @@ function stats(){
   document.getElementById('sAnd').textContent=fichas.filter(f=>f.status==='andamento').length;
   document.getElementById('sCon').textContent=fichas.filter(f=>f.status==='concluido').length;
 }
+
 function setFiltro(filtro,el){
   filtroAtivo=filtro;
   document.querySelectorAll('.sc').forEach(s=>s.classList.remove('active-filter'));
@@ -251,6 +282,7 @@ function setFiltro(filtro,el){
   document.getElementById('tblTitulo').textContent=titulos[filtro]||'Fichas';
   render();
 }
+
 function render(){
   const q=document.getElementById('srch').value.toLowerCase();
   let list=fichas.filter(f=>(f.nome||'').toLowerCase().includes(q)||(f.empresa||'').toLowerCase().includes(q));
@@ -267,30 +299,65 @@ function render(){
   h+='</tbody></table>';
   document.getElementById('tbl').innerHTML=h;
 }
-function carregarEmpresas(){
-  const salvas=localStorage.getItem('proeficacia_empresas');
-  empresas=salvas?JSON.parse(salvas):[];renderEmpresas();
+
+// EMPRESAS — agora no Supabase
+async function carregarEmpresas(){
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/empresas?select=*&order=nome.asc',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}
+    });
+    const empresas=await r.json();
+    renderEmpresas(empresas);
+  }catch(e){document.getElementById('empGrid').innerHTML='<div class="empty">Erro ao carregar empresas.</div>';}
 }
-function salvarEmpresas(){localStorage.setItem('proeficacia_empresas',JSON.stringify(empresas));}
-function addEmpresa(){
-  const inp=document.getElementById('novaEmp'),nome=inp.value.trim();
+
+async function addEmpresa(){
+  const inp=document.getElementById('novaEmp');
+  const nome=inp.value.trim().toUpperCase();
   if(!nome)return;
-  if(empresas.find(e=>e.nome.toLowerCase()===nome.toLowerCase())){alert('Empresa já cadastrada.');return;}
-  empresas.push({nome,id:Date.now()});salvarEmpresas();renderEmpresas();inp.value='';
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/empresas',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+token,'Prefer':'return=minimal'},
+      body:JSON.stringify({nome})
+    });
+    if(!r.ok){const e=await r.text();if(e.includes('unique'))alert('Empresa já cadastrada.');else alert('Erro ao cadastrar.');return;}
+    inp.value='';
+    carregarEmpresas();
+  }catch(e){alert('Erro ao cadastrar empresa.');}
 }
-function removerEmpresa(id){
+
+async function removerEmpresa(id){
   if(!confirm('Remover esta empresa?'))return;
-  empresas=empresas.filter(e=>e.id!==id);salvarEmpresas();renderEmpresas();
+  try{
+    await fetch(SB_URL+'/rest/v1/empresas?id=eq.'+id,{
+      method:'DELETE',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}
+    });
+    carregarEmpresas();
+  }catch(e){alert('Erro ao remover.');}
 }
-function renderEmpresas(){
+
+function renderEmpresas(empresas){
   const grid=document.getElementById('empGrid');
-  if(!empresas.length){grid.innerHTML='<div class="empty">Nenhuma empresa cadastrada ainda.</div>';return;}
+  if(!empresas||!empresas.length){grid.innerHTML='<div class="empty">Nenhuma empresa cadastrada ainda.</div>';return;}
   grid.innerHTML=empresas.map(e=>{
     const url=`${FORM_URL}?empresa=${encodeURIComponent(e.nome)}`;
-    return`<div class="emp-card"><div class="emp-card-top"><span class="emp-name">${e.nome}</span><button class="emp-del" onclick="removerEmpresa(${e.id})">×</button></div><div class="emp-url">${url}</div><div class="emp-actions"><button class="emp-copy" onclick="copiarLinkEmp('${url}',this)">📋 Copiar link</button><button class="emp-open" onclick="window.open('${url}','_blank')">Abrir</button></div></div>`;
+    return`<div class="emp-card">
+      <div class="emp-card-top"><span class="emp-name">${e.nome}</span><button class="emp-del" onclick="removerEmpresa(${e.id})">×</button></div>
+      <div class="emp-url">${url}</div>
+      <div class="emp-actions">
+        <button class="emp-copy" onclick="copiarLinkEmp('${url}',this)">📋 Copiar link</button>
+        <button class="emp-open" onclick="window.open('${url}','_blank')">Abrir</button>
+      </div>
+    </div>`;
   }).join('');
 }
-function copiarLinkEmp(url,btn){navigator.clipboard.writeText(url).then(()=>{btn.textContent='✓ Copiado!';setTimeout(()=>btn.textContent='📋 Copiar link',2000);});}
+
+function copiarLinkEmp(url,btn){
+  navigator.clipboard.writeText(url).then(()=>{btn.textContent='✓ Copiado!';setTimeout(()=>btn.textContent='📋 Copiar link',2000);});
+}
+
 function formatarHorarios(f){
   const raw=(f.horario_seg_sex||'').trim();
   if(!raw)return'Não informado';
@@ -298,23 +365,27 @@ function formatarHorarios(f){
   const uniq=[...new Set(partes)];
   if(uniq.length===1)return`Seg–Sex: ${uniq[0]}`;
   let result=[],i=0;
-  while(i<partes.length){let j=i;while(j<partes.length-1&&partes[j]===partes[j+1])j++;result.push(i===j?`${dias[i]}: ${partes[i]}`:`${dias[i]}–${dias[j]}: ${partes[i]}`);i=j+1;}
+  while(i<partes.length){
+    let j=i;while(j<partes.length-1&&partes[j]===partes[j+1])j++;
+    result.push(i===j?`${dias[i]}: ${partes[i]}`:`${dias[i]}–${dias[j]}: ${partes[i]}`);
+    i=j+1;
+  }
   return result.join('<br>');
 }
+
 async function listarDocumentos(fichaId){
   try{
-    const r=await fetch(`${SB_URL}/storage/v1/object/list/documentos-admissao`,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({prefix:`fichas/${fichaId}/`,limit:50})});
+    const r=await fetch(`${SB_URL}/storage/v1/object/list/documentos-admissao`,{
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+      body:JSON.stringify({prefix:`fichas/${fichaId}/`,limit:50})
+    });
     return r.ok?(await r.json()||[]):[];
   }catch(e){return[];}
 }
-async function openModal(id){
-  const f=fichas.find(x=>x.id===id);if(!f)return;atual=f;
-  document.getElementById('mTit').textContent=f.nome||'Ficha admissional';
-  let filhos;try{filhos=JSON.parse(f.filhos||'[]');}catch(e){filhos=[];}
-  const fh=filhos.length?filhos.map(c=>`<div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)">${c.nome||'—'} | Nasc: ${c.nasc||'—'} | CPF: ${c.cpf||'—'}</div>`).join(''):'<span style="color:var(--muted);font-size:13px">Nenhum</span>';
-  const dt=f.admissao?new Date(f.admissao+'T12:00:00').toLocaleDateString('pt-BR'):'—';
-  const linkFunc=f.status==='aguardando_funcionario'?`${FORM_URL}?modo=funcionario&ficha=${f.id}&empresa=${encodeURIComponent(f.empresa||'')}`:null;
-  document.getElementById('mBody').innerHTML=`
+
+function gerarHTMLFicha(f,filhos,dt,linkFunc){
+  return `
     <div class="ms"><div class="ms-tit">Empresa & admissão</div><div class="mg">
       <div class="mf"><div class="ml">Empresa</div><div class="mv">${f.empresa||'—'}</div></div>
       <div class="mf"><div class="ml">Admissão</div><div class="mv">${dt}</div></div>
@@ -325,7 +396,10 @@ async function openModal(id){
       <div class="mf" style="grid-column:span 2"><div class="ml">Horário Seg–Sex</div><div class="mv" style="font-size:13px">${formatarHorarios(f)}</div></div>
       <div class="mf" style="grid-column:span 2"><div class="ml">Horário Sábado</div><div class="mv">${f.horario_sabado||'Não informado'}</div></div>
     </div></div>
-    ${linkFunc?`<div class="ms"><div class="ms-tit">⏳ Aguardando funcionário</div><div style="font-size:13px;color:var(--muted);margin-bottom:6px">Envie o link abaixo para o funcionário completar os dados pessoais:</div><div class="link-func-copy"><span>${linkFunc}</span><button onclick="navigator.clipboard.writeText('${linkFunc}').then(()=>{this.textContent='✓ Copiado!';setTimeout(()=>this.textContent='Copiar',2000)})">Copiar</button></div></div>`:''}
+    ${linkFunc?`<div class="ms"><div class="ms-tit">⏳ Aguardando funcionário</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:6px">Envie o link abaixo para o funcionário completar os dados:</div>
+      <div class="link-func-copy"><span>${linkFunc}</span><button onclick="navigator.clipboard.writeText('${linkFunc}').then(()=>{this.textContent='✓';setTimeout(()=>this.textContent='Copiar',2000)})">Copiar</button></div>
+    </div>`:''}
     <div class="ms"><div class="ms-tit">Dados pessoais</div><div class="mg">
       <div class="mf" style="grid-column:span 2"><div class="ml">Nome completo</div><div class="mv">${f.nome||'—'}</div></div>
       <div class="mf"><div class="ml">CPF</div><div class="mv">${f.cpf||'—'}</div></div>
@@ -344,7 +418,18 @@ async function openModal(id){
       <div class="mf"><div class="ml">Complemento</div><div class="mv">${f.complemento||'—'}</div></div>
       <div class="mf" style="grid-column:span 2"><div class="ml">Cidade / UF</div><div class="mv">${f.cidade||'—'}</div></div>
     </div></div>
-    <div class="ms"><div class="ms-tit">Filhos</div>${fh}</div>
+    <div class="ms"><div class="ms-tit">Filhos</div>${filhos}</div>`;
+}
+
+async function openModal(id){
+  const f=fichas.find(x=>x.id===id);if(!f)return;atual=f;
+  document.getElementById('mTit').textContent=f.nome||'Ficha admissional';
+  let filhosArr;try{filhosArr=JSON.parse(f.filhos||'[]');}catch(e){filhosArr=[];}
+  const fh=filhosArr.length?filhosArr.map(c=>`<div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)">${c.nome||'—'} | Nasc: ${c.nasc||'—'} | CPF: ${c.cpf||'—'}</div>`).join(''):'<span style="color:var(--muted);font-size:13px">Nenhum</span>';
+  const dt=f.admissao?new Date(f.admissao+'T12:00:00').toLocaleDateString('pt-BR'):'—';
+  const linkFunc=f.status==='aguardando_funcionario'?`${FORM_URL}?modo=funcionario&ficha=${f.id}&empresa=${encodeURIComponent(f.empresa||'')}`:null;
+  const html=gerarHTMLFicha(f,fh,dt,linkFunc);
+  document.getElementById('mBody').innerHTML=html+`
     <div class="ms"><div class="ms-tit">Documentos & ASO</div><div class="doc-list" id="docList"><span class="doc-empty">Carregando...</span></div></div>
     <div class="mact">
       <div style="display:flex;align-items:center;gap:8px;flex:1">
@@ -370,22 +455,45 @@ async function openModal(id){
     }).join('');
   });
 }
+
 function closeModal(){document.getElementById('ov').classList.remove('open');atual=null;}
-function imprimirFicha(){window.print();}
+
+function imprimirFicha(){
+  if(!atual)return;
+  let filhosArr;try{filhosArr=JSON.parse(atual.filhos||'[]');}catch(e){filhosArr=[];}
+  const fh=filhosArr.length?filhosArr.map(c=>`<div style="padding:4px 0;border-bottom:1px solid #eee">${c.nome||'—'} | Nasc: ${c.nasc||'—'} | CPF: ${c.cpf||'—'}</div>`).join(''):'<span style="color:#666">Nenhum</span>';
+  const dt=atual.admissao?new Date(atual.admissao+'T12:00:00').toLocaleDateString('pt-BR'):'—';
+  document.getElementById('printArea').innerHTML=`
+    <h1>Ficha Admissional — ${atual.nome||atual.empresa||'—'}</h1>
+    ${gerarHTMLFicha(atual,fh,dt,null)}
+    <p style="margin-top:20px;font-size:11px;color:#999">Gerado em ${new Date().toLocaleString('pt-BR')} — Pró Eficácia Contabilidade Consultiva</p>`;
+  window.print();
+}
+
 async function excluirFicha(){
   if(!atual)return;
   if(!confirm(`Excluir a ficha de "${atual.nome||atual.empresa||'este registro'}"? Esta ação não pode ser desfeita.`))return;
   try{
-    await fetch(SB_URL+'/rest/v1/fichas_admissionais?id=eq.'+atual.id,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}});
-    fichas=fichas.filter(f=>f.id!==atual.id);stats();render();closeModal();
+    await fetch(SB_URL+'/rest/v1/fichas_admissionais?id=eq.'+atual.id,{
+      method:'DELETE',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}
+    });
+    fichas=fichas.filter(f=>f.id!==atual.id);
+    stats();render();closeModal();
   }catch(e){alert('Erro ao excluir. Tente novamente.');}
 }
+
 async function salvar(){
   if(!atual)return;
   const status=document.getElementById('mStatus').value;
   try{
-    await fetch(SB_URL+'/rest/v1/fichas_admissionais?id=eq.'+atual.id,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+token,'Prefer':'return=minimal'},body:JSON.stringify({status})});
-    const i=fichas.findIndex(f=>f.id===atual.id);if(i!==-1)fichas[i].status=status;
+    await fetch(SB_URL+'/rest/v1/fichas_admissionais?id=eq.'+atual.id,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+token,'Prefer':'return=minimal'},
+      body:JSON.stringify({status})
+    });
+    const i=fichas.findIndex(f=>f.id===atual.id);
+    if(i!==-1)fichas[i].status=status;
     stats();render();closeModal();
   }catch(e){alert('Erro ao salvar status.');}
 }
